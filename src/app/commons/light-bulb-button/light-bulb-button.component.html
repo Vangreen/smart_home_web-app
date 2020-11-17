@@ -1,0 +1,9 @@
+<button
+  mat-button
+  (click)="enableDisableRule()"
+  [ngClass]="{'green' : toggle, 'red': !toggle}"
+  class="button">
+  <img src="{{img}}" class="light">
+  <p class="room">{{room}}</p>
+  {{status}}
+</button>
