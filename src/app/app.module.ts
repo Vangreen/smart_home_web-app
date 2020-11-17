@@ -10,11 +10,15 @@ import { BottomNavbarComponent } from './commons/bottom-navbar/bottom-navbar.com
 import { IgxBottomNavModule } from 'igniteui-angular';
 import { FirstScreenComponent } from './first-screen/first-screen.component';
 import { SecondScreenComponent } from './second-screen/second-screen.component';
-import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSliderModule} from '@angular/material/slider';
+import {MatInputModule} from '@angular/material/input';
 import { LightBulbButtonComponent } from './commons/light-bulb-button/light-bulb-button.component';
 import { BlindButtonComponent } from './commons/blind-button/blind-button.component';
+import { LoginScreenComponent } from './login-screen/login-screen.component';
+import { ContainerComponent } from './container/container.component';
+
 
 @NgModule({
   declarations: [
@@ -23,7 +27,9 @@ import { BlindButtonComponent } from './commons/blind-button/blind-button.compon
     FirstScreenComponent,
     SecondScreenComponent,
     LightBulbButtonComponent,
-    BlindButtonComponent
+    BlindButtonComponent,
+    LoginScreenComponent,
+    ContainerComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +39,8 @@ import { BlindButtonComponent } from './commons/blind-button/blind-button.compon
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     MatSlideToggleModule,
     MatButtonModule,
-    MatSliderModule
+    MatSliderModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
