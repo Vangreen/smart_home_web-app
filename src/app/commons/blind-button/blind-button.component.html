@@ -1,0 +1,23 @@
+<button
+  mat-button
+  class="button">
+  <div class="row">
+    <div class="column-left">
+      <img src="assets/svg/blind.svg" class="img">
+      <p class="room">Roleta Sypialnia</p>
+    </div>
+    <div class="column-right">
+      <mat-slider
+        class="example-margin"
+        [disabled]="disabled"
+        [invert]="invert"
+        [max]="max"
+        [min]="min"
+        [step]="step"
+        [thumbLabel]="thumbLabel"
+        [tickInterval]="getSliderTickInterval()"
+        [vertical]="vertical">
+      </mat-slider>
+    </div>
+  </div>
+</button>

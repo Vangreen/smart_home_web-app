@@ -12,7 +12,9 @@ import { FirstScreenComponent } from './first-screen/first-screen.component';
 import { SecondScreenComponent } from './second-screen/second-screen.component';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatButtonModule} from '@angular/material/button';
+import {MatSliderModule} from '@angular/material/slider';
 import { LightBulbButtonComponent } from './commons/light-bulb-button/light-bulb-button.component';
+import { BlindButtonComponent } from './commons/blind-button/blind-button.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { LightBulbButtonComponent } from './commons/light-bulb-button/light-bulb
     BottomNavbarComponent,
     FirstScreenComponent,
     SecondScreenComponent,
-    LightBulbButtonComponent
+    LightBulbButtonComponent,
+    BlindButtonComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +32,8 @@ import { LightBulbButtonComponent } from './commons/light-bulb-button/light-bulb
     IgxBottomNavModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     MatSlideToggleModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSliderModule
   ],
   providers: [],
   bootstrap: [AppComponent]
