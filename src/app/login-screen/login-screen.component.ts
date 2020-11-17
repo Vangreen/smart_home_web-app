@@ -16,8 +16,6 @@ export class LoginScreenComponent implements OnInit {
 
 
   btnClick() {
-    console.log('clicked');
     this.router.navigateByUrl('/container-component');
-    this.value = 'clicked';
   }
 }
