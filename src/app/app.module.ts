@@ -6,18 +6,29 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { BottomNavbarComponent } from './bottom-navbar/bottom-navbar.component';
+import { IgxBottomNavModule } from 'igniteui-angular';
+import { FirstScreenComponent } from './first-screen/first-screen.component';
+import { SecondScreenComponent } from './second-screen/second-screen.component';
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BottomNavbarComponent,
+    FirstScreenComponent,
+    SecondScreenComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    IgxBottomNavModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
+    MatSlideToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
