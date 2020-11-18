@@ -4,3 +4,26 @@
   clear: both;
   margin: auto;
 }
+
+.room-button{
+  top: 8px;
+  left: 16px;
+}
+
+.button-container{
+  margin-bottom: 5px;
+}
+
+.room-name{
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  font-size: 50px;
+}
+
+.room-name-container{
+  margin-left: 15px;
+
+}
+
+

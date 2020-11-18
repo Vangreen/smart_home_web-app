@@ -1,0 +1,5 @@
+<mat-selection-list  [multiple]="false">
+  <mat-list-option *ngFor="let room of rooms" [value]="room" (click)="setRoom(room)">
+    {{room}}
+  </mat-list-option>
+</mat-selection-list>

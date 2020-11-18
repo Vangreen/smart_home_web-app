@@ -14,10 +14,14 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import {MatListModule} from '@angular/material/list';
 import { LightBulbButtonComponent } from './commons/light-bulb-button/light-bulb-button.component';
 import { BlindButtonComponent } from './commons/blind-button/blind-button.component';
 import { LoginScreenComponent } from './login-screen/login-screen.component';
 import { ContainerComponent } from './container/container.component';
+import { BottomSheetComponent } from './commons/bottom-sheet/bottom-sheet.component';
 
 
 @NgModule({
@@ -29,7 +33,8 @@ import { ContainerComponent } from './container/container.component';
     LightBulbButtonComponent,
     BlindButtonComponent,
     LoginScreenComponent,
-    ContainerComponent
+    ContainerComponent,
+    BottomSheetComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +45,10 @@ import { ContainerComponent } from './container/container.component';
     MatSlideToggleModule,
     MatButtonModule,
     MatSliderModule,
-    MatInputModule
+    MatInputModule,
+    MatIconModule,
+    MatBottomSheetModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

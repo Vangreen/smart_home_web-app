@@ -1,15 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Injectable, OnInit} from '@angular/core';
+import {BottomSheetComponent} from "../commons/bottom-sheet/bottom-sheet.component";
+import {MatBottomSheet} from "@angular/material/bottom-sheet";
 
 @Component({
   selector: 'app-first-screen',
   templateUrl: './first-screen.component.html',
   styleUrls: ['./first-screen.component.css']
 })
+@Injectable({
+  providedIn: 'root'
+})
 export class FirstScreenComponent implements OnInit {
 
-  constructor() { }
+  room: string;
 
-  ngOnInit(): void {
+  constructor(private _bottomSheet: MatBottomSheet) {
+    this.room = 'Salon';
   }
 
+  ngOnInit(): void {
+
+  }
+
+  setRoom(value: string): void {
+    this._bottomSheet.dismiss(value)
+  }
+
+
+  openBottomSheet(): void {
+    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent);
+    bottomSheetRef.afterDismissed().subscribe((dataFromChild) => {
+      if (dataFromChild != null) {
+        this.room = dataFromChild;
+      }
+    });
+  }
 }

@@ -1,7 +1,21 @@
+<script src="../commons/bottom-sheet/bottom-sheet.component.ts"></script>
 <div class="row">
 
-<app-light-bulb-button></app-light-bulb-button>
+  <div class="button-container">
+    <button mat-mini-fab color="grey"
+            aria-label="Example icon button with a filter list icon"
+            class="room-button"
+            (click)="openBottomSheet()">
+      <mat-icon>filter_list</mat-icon>
+    </button>
+  </div>
+
+  <div class="room-name-container">
+    <p class="room-name">{{room}}</p>
+  </div>
+
+  <app-light-bulb-button></app-light-bulb-button>
 
 
-<app-blind-button></app-blind-button>
+  <app-blind-button></app-blind-button>
 </div>
