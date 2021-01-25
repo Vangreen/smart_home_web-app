@@ -13,7 +13,8 @@ import {MatBottomSheet} from "@angular/material/bottom-sheet";
 export class FirstScreenComponent implements OnInit {
 
   room: string;
-
+  biurko = 'ws://192.168.2.145:81';
+  parapet = 'ws://192.168.2.125:81';
   constructor(private _bottomSheet: MatBottomSheet) {
     this.room = 'Salon';
   }
@@ -23,7 +24,7 @@ export class FirstScreenComponent implements OnInit {
   }
 
   setRoom(value: string): void {
-    this._bottomSheet.dismiss(value)
+    this._bottomSheet.dismiss(value);
   }
 
 

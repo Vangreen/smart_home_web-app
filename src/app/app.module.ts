@@ -22,6 +22,7 @@ import { BlindButtonComponent } from './commons/blind-button/blind-button.compon
 import { LoginScreenComponent } from './login-screen/login-screen.component';
 import { ContainerComponent } from './container/container.component';
 import { BottomSheetComponent } from './commons/bottom-sheet/bottom-sheet.component';
+import {LongPress} from '../../long-press';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { BottomSheetComponent } from './commons/bottom-sheet/bottom-sheet.compon
     BlindButtonComponent,
     LoginScreenComponent,
     ContainerComponent,
-    BottomSheetComponent
+    BottomSheetComponent,
+    LongPress
   ],
   imports: [
     BrowserModule,

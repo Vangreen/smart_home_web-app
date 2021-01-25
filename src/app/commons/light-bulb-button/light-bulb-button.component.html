@@ -1,9 +1,10 @@
 <button
   mat-button
   (click)="enableDisableRule()"
-  [ngClass]="{'green' : toggle, 'red': !toggle}"
+  long-press (onLongPress)="onLongPress()"
+  [ngClass]="{'turnedOn' : toggle, 'turnedOff': !toggle, 'disabledClick' : disableClick}"
   class="button">
   <img src="{{img}}" class="light">
-  <p class="room">{{room}}</p>
-  {{status}}
+  <p class="room">{{name}}</p>
+  <!--  <p>{{connectionStatus}}</p>-->
 </button>

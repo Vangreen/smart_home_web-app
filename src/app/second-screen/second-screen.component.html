@@ -1,1 +1,11 @@
-<mat-slide-toggle>Slide me!</mat-slide-toggle>
+
+<div class="center">
+  <button class="button" mat-fab [style.background-color]="'red'" (click)="changeColor(0)"></button>
+  <button class="button" mat-fab [style.background-color]="'green'" (click)="changeColor(120)"></button>
+  <button class="button" mat-fab [style.background-color]="'blue'" (click)="changeColor(240)"></button>
+  <button class="button" mat-fab [style.background-color]="'white'" (click)="changeColor(69)"></button>
+</div>
+<div class="upper">
+  <mat-slider vertical ></mat-slider>
+</div>
+

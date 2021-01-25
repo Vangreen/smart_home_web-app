@@ -14,8 +14,12 @@
     <p class="room-name">{{room}}</p>
   </div>
 
-  <app-light-bulb-button></app-light-bulb-button>
+  <app-light-bulb-button
+    [url]="parapet"
+    [name]="'Biurko'"></app-light-bulb-button>
+  <app-light-bulb-button
+    [url]="biurko"
+    [name]="'Parapet'"></app-light-bulb-button>
 
 
-  <app-blind-button></app-blind-button>
 </div>
