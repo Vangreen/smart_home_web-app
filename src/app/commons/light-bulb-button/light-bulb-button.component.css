@@ -1,15 +1,22 @@
 .button{
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   margin: 15px;
+  border-radius:15%
 }
 
-.green {
+.turnedOn {
   background-color: white;
 }
 
-.red {
+.turnedOff {
   background-color: lightgrey;
+}
+
+.disabledClick{
+  pointer-events: none;
+  cursor: default;
+  background-color: indianred;
 }
 
 .light{
