@@ -1,0 +1,23 @@
+<mat-tab-group mat-align-tabs="center">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">color_lens</mat-icon>
+    </ng-template>
+    <div class="parent">
+      <div class="center">
+        <color-circle (onChangeComplete)="changeColor($event)" [colors]="colors"></color-circle>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">grid_on</mat-icon>
+    </ng-template>
+    <div class="parent">
+      <div class="center">
+      </div>
+    </div>
+  </mat-tab>
+
+</mat-tab-group>

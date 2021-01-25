@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {webSocket} from 'rxjs/webSocket';
 import {NavigationExtras, Router} from '@angular/router';
+import {MatBottomSheet} from "@angular/material/bottom-sheet";
+import {ColorPickerComponent} from "../color-picker/color-picker.component"
 
 @Component({
   selector: 'app-light-bulb-button',
@@ -9,7 +11,7 @@ import {NavigationExtras, Router} from '@angular/router';
 })
 export class LightBulbButtonComponent implements OnInit {
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private _bottomSheet: MatBottomSheet) {
   }
   @Input() url: string;
   @Input() name: string;
@@ -53,6 +55,10 @@ export class LightBulbButtonComponent implements OnInit {
     this.img = this.toggle ? 'assets/svg/light_on.svg' : 'assets/svg/light_off.svg';
   }
 
+  getStatus() {
+    return this.status;
+  }
+
   enableDisableRule() {
     this.toggleButton();
     const message = {
@@ -63,12 +69,15 @@ export class LightBulbButtonComponent implements OnInit {
   }
 
   onLongPress() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        state: this.status,
-        url: this.url
-      }
-    };
-    this.router.navigate(['color-pick'], navigationExtras);
+    //   const navigationExtras: NavigationExtras = {
+    //     queryParams: {
+    //       state: this.status,
+    //       url: this.url
+    //     }
+    //   };
+    //   this.router.navigate(['color-pick'], navigationExtras);
+    this._bottomSheet.open(ColorPickerComponent, {
+      data: {url: this.url, state: this.status}
+    });
   }
 }
