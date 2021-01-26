@@ -55,7 +55,7 @@ import {ColorCircleModule} from "ngx-color/circle";
     MatIconModule,
     MatBottomSheetModule,
     MatListModule,
-    HttpClientModule
+    HttpClientModule,
     ColorSketchModule,
     MatTabsModule,
     ColorCircleModule,
