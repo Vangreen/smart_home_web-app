@@ -2,6 +2,7 @@ import {Component, Inject, Input, OnInit} from '@angular/core';
 import {webSocket} from "rxjs/webSocket";
 import {ColorEvent} from 'ngx-color';
 import {MAT_BOTTOM_SHEET_DATA} from "@angular/material/bottom-sheet";
+import iro from '@jaames/iro';
 
 export interface DialogData {
   url: string;
@@ -20,10 +21,12 @@ export class ColorPickerComponent implements OnInit {
   butHue: number;
   message: string;
   colors: string[];
-
-  // lightBulbService: LightBulbButtonComponent;
+  executed: boolean = false;
+  colorPicker: iro.ColorPicker;
 
   constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: DialogData) {
+
+
     this.url = data.url;
     this.state = data.state;
     // color palete
@@ -60,26 +63,34 @@ export class ColorPickerComponent implements OnInit {
     this.subject.complete();
   }
 
-  changeColorCircle($event: string): void {
-    console.log($event);
+  changeColorCircle(): void {
+    console.log(this.colorPicker.color.hsv.h);
+    this.butHue = this.colorPicker.color.hsv.h;
+    this.subject.subscribe();
+    const message = {
+      task: 'color change',
+      state: this.state,
+      hue: this.colorPicker.color.hsv.h,
+      saturation: this.colorPicker.color.hsv.s,
+      brightness: this.colorPicker.color.hsv.v
+    };
+    this.subject.next(message);
+    this.subject.complete();
+  }
 
-    // // this.butHue = Math.round( $event.color.hsv.h);
-    // let brightnessLoc = 50;
-    // let sat = 100;
-    // this.subject.subscribe();
-    // if (this.butHue === 69) {
-    //   brightnessLoc = 100;
-    //   sat = 0;
-    // }
-    // const message = {
-    //   task: 'color change',
-    //   state: this.state,
-    //   hue: this.butHue,
-    //   saturation: sat,
-    //   brightness: brightnessLoc
-    // };
-    // this.subject.next(message);
-    // this.subject.complete();
+  tabClick(tab) {
+    console.log(tab.index);
+    // tab.index
+    if (tab.index === 1 && this.executed == false) {
+      this.executed = true;
+      this.colorPicker = iro.ColorPicker("#picker", {
+        width: 280,
+        color: "rgb(255, 0, 0)",
+        borderWidth: 1,
+        borderColor: "#fff",
+      });
+    }
+    this.colorPicker.color.hsv
   }
 
 
