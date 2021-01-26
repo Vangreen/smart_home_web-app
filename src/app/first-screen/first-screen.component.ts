@@ -16,6 +16,7 @@ export class FirstScreenComponent implements OnInit {
 
   room: string;
   biurko = 'ws://192.168.0.25:81';
+  biurkoHsv= [0,0,100];
   parapet = 'ws://192.168.2.125:81';
   Buttons: Array<DeviceConfiguration>;
   constructor(private _bottomSheet: MatBottomSheet, private apiService: ApiService) {
