@@ -23,6 +23,7 @@ import { LoginScreenComponent } from './login-screen/login-screen.component';
 import { ContainerComponent } from './container/container.component';
 import { BottomSheetComponent } from './commons/bottom-sheet/bottom-sheet.component';
 import {LongPress} from '../../long-press';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import {LongPress} from '../../long-press';
     MatInputModule,
     MatIconModule,
     MatBottomSheetModule,
-    MatListModule
+    MatListModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

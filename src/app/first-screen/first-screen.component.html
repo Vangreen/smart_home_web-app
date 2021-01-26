@@ -17,9 +17,13 @@
   <app-light-bulb-button
     [url]="parapet"
     [name]="'Biurko'"></app-light-bulb-button>
-  <app-light-bulb-button
-    [url]="biurko"
-    [name]="'Parapet'"></app-light-bulb-button>
-
+<!--  <app-light-bulb-button-->
+<!--    [url]="biurko"-->
+<!--    [name]="'Parapet'"></app-light-bulb-button>-->
+  <ng-container *ngFor="let button of Buttons">
+    <app-light-bulb-button
+      [url]="button.ip"
+      [name]="button.deviceName"></app-light-bulb-button>
+  </ng-container>
 
 </div>

@@ -1,6 +1,8 @@
 import {Component, Injectable, OnInit} from '@angular/core';
 import {BottomSheetComponent} from "../commons/bottom-sheet/bottom-sheet.component";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
+import { ApiService } from '../api.service';
+import {DeviceConfiguration} from '../models/DeviceConfiguration';
 
 @Component({
   selector: 'app-first-screen',
@@ -15,8 +17,13 @@ export class FirstScreenComponent implements OnInit {
   room: string;
   biurko = 'ws://192.168.2.145:81';
   parapet = 'ws://192.168.2.125:81';
-  constructor(private _bottomSheet: MatBottomSheet) {
+  Buttons: Array<DeviceConfiguration>;
+  constructor(private _bottomSheet: MatBottomSheet, private apiService: ApiService) {
     this.room = 'Salon';
+    this.apiService.getDevices().subscribe((data: Array<DeviceConfiguration>) => {
+      console.log(data);
+      this.Buttons = data;
+    });
   }
 
   ngOnInit(): void {
