@@ -15,7 +15,7 @@ import {DeviceConfiguration} from '../models/DeviceConfiguration';
 export class FirstScreenComponent implements OnInit {
 
   room: string;
-  biurko = 'ws://192.168.2.145:81';
+  biurko = 'ws://192.168.0.25:81';
   parapet = 'ws://192.168.2.125:81';
   Buttons: Array<DeviceConfiguration>;
   constructor(private _bottomSheet: MatBottomSheet, private apiService: ApiService) {

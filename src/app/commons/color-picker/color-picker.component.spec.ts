@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SecondScreenComponent } from './second-screen.component';
+import { ColorPickerComponent } from './color-picker.component';
 
-describe('SecondScreenComponent', () => {
-  let component: SecondScreenComponent;
-  let fixture: ComponentFixture<SecondScreenComponent>;
+describe('ColorPickerComponent', () => {
+  let component: ColorPickerComponent;
+  let fixture: ComponentFixture<ColorPickerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SecondScreenComponent ]
+      declarations: [ ColorPickerComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SecondScreenComponent);
+    fixture = TestBed.createComponent(ColorPickerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
