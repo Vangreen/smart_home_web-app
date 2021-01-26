@@ -7,6 +7,7 @@ import iro from '@jaames/iro';
 export interface DialogData {
   url: string;
   state: string;
+  hsv: Array<number>;
 }
 
 @Component({
@@ -18,6 +19,7 @@ export class ColorPickerComponent implements OnInit {
   @Input() url: string;
   state: string;
   subject;
+  hsv: Array<number>;
   butHue: number;
   message: string;
   colors: string[];
@@ -34,7 +36,7 @@ export class ColorPickerComponent implements OnInit {
     this.subject = webSocket({
       url: this.url
     });
-
+    this.hsv = data.hsv;
   }
 
   ngOnInit(): void {
@@ -82,10 +84,12 @@ export class ColorPickerComponent implements OnInit {
     console.log(tab.index);
     // tab.index
     if (tab.index === 1 && this.executed == false) {
+      console.log(this.hsv[2]);
       this.executed = true;
       this.colorPicker = iro.ColorPicker("#picker", {
         width: 280,
-        color: "rgb(255, 0, 0)",
+        color: {h: this.hsv[0], s: this.hsv[1], v: this.hsv[2]},
+        // color: "#0f0",
         borderWidth: 1,
         borderColor: "#fff",
       });

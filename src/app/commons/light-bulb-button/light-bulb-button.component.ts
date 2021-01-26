@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {webSocket} from 'rxjs/webSocket';
-import {NavigationExtras, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {ColorPickerComponent} from "../color-picker/color-picker.component"
 
@@ -13,14 +13,17 @@ export class LightBulbButtonComponent implements OnInit {
 
   constructor(private router: Router, private _bottomSheet: MatBottomSheet) {
   }
+
   @Input() url: string;
   @Input() name: string;
+  @Input() hsv: Array<number>;
   toggle = true;
   status = 'On';
   img = 'assets/svg/light_on.svg';
   subject;
   disableClick = false;
   connectionStatus = 'Loading';
+
   ngOnInit(): void {
     this.subject = webSocket({
       url: this.url
@@ -28,13 +31,15 @@ export class LightBulbButtonComponent implements OnInit {
     this.subject.subscribe(
       msg => {
         console.log('message received: ' + JSON.stringify(msg));
-        if (msg.task === 'state change' || msg.response === 'connected'){
+        if (msg.task === 'state change' || msg.response === 'connected') {
           this.connectionStatus = '';
-          if (msg.state === 'On' && !this.toggle){
+          if (msg.state === 'On' && !this.toggle) {
             this.toggleButton();
-          }else if (msg.state === 'Off' && this.toggle){
+          } else if (msg.state === 'Off' && this.toggle) {
             this.toggleButton();
           }
+        } else if (msg.task === 'color change'){
+          this.hsv = [msg.hue, msg.saturation, msg.brightness];
         }
       }, // Called whenever there is a message from the server.
       err => {
@@ -49,6 +54,7 @@ export class LightBulbButtonComponent implements OnInit {
       } // Called when connection is closed (for whatever reason).
     );
   }
+
   toggleButton() {
     this.toggle = !this.toggle;
     this.status = this.toggle ? 'On' : 'Off';
@@ -77,7 +83,7 @@ export class LightBulbButtonComponent implements OnInit {
     //   };
     //   this.router.navigate(['color-pick'], navigationExtras);
     this._bottomSheet.open(ColorPickerComponent, {
-      data: {url: this.url, state: this.status}
+      data: {url: this.url, state: this.status, hsv: this.hsv}
     });
   }
 }
