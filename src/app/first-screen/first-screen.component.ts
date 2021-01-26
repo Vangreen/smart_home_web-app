@@ -1,7 +1,7 @@
 import {Component, Injectable, OnInit} from '@angular/core';
 import {BottomSheetComponent} from "../commons/bottom-sheet/bottom-sheet.component";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
-import { ApiService } from '../api.service';
+import { ApiService } from '../service/api.service';
 import {DeviceConfiguration} from '../models/DeviceConfiguration';
 
 @Component({
