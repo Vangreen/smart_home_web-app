@@ -27,6 +27,7 @@ import {ColorSketchModule} from 'ngx-color/sketch';
 import {ColorPickerComponent} from './commons/color-picker/color-picker.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {ColorCircleModule} from "ngx-color/circle";
+import {MatMenuModule} from '@angular/material/menu';
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import {ColorCircleModule} from "ngx-color/circle";
     ColorSketchModule,
     MatTabsModule,
     ColorCircleModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

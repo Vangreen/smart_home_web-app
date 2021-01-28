@@ -10,6 +10,20 @@
     </button>
   </div>
 
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <mat-icon>add</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>add_to_queue</mat-icon>
+      <span>Dodaj akcesoria</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>library_add</mat-icon>
+      <span>Dodaj scenerie</span>
+    </button>
+  </mat-menu>
+
   <div class="room-name-container">
     <p class="room-name">{{room}}</p>
   </div>
@@ -19,9 +33,9 @@
     [name]="'Biurko'"
     [hsv]="biurkoHsv"
   ></app-light-bulb-button>
-<!--  <app-light-bulb-button-->
-<!--    [url]="biurko"-->
-<!--    [name]="'Parapet'"></app-light-bulb-button>-->
+  <!--  <app-light-bulb-button-->
+  <!--    [url]="biurko"-->
+  <!--    [name]="'Parapet'"></app-light-bulb-button>-->
   <ng-container *ngFor="let button of Buttons">
     <app-light-bulb-button
       [url]="button.ip"
