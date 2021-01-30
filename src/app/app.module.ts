@@ -27,6 +27,9 @@ import {ColorSketchModule} from 'ngx-color/sketch';
 import {ColorPickerComponent} from './commons/color-picker/color-picker.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {ColorCircleModule} from "ngx-color/circle";
+import {MatMenuModule} from '@angular/material/menu';
+import { ScenesButtonComponent } from './commons/scenes-button/scenes-button.component';
+import { ScenesDetailsComponent } from './commons/scenes-details/scenes-details.component';
 
 
 @NgModule({
@@ -41,6 +44,8 @@ import {ColorCircleModule} from "ngx-color/circle";
     BottomSheetComponent,
     LongPress,
     ColorPickerComponent,
+    ScenesButtonComponent,
+    ScenesDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,6 +64,7 @@ import {ColorCircleModule} from "ngx-color/circle";
     ColorSketchModule,
     MatTabsModule,
     ColorCircleModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

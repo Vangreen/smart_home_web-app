@@ -10,18 +10,58 @@
     </button>
   </div>
 
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <mat-icon>add</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>add_to_queue</mat-icon>
+      <span>Dodaj akcesoria</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>library_add</mat-icon>
+      <span>Dodaj scenerie</span>
+    </button>
+  </mat-menu>
+
   <div class="room-name-container">
     <p class="room-name">{{room}}</p>
   </div>
+  <p class="category">Scenerie</p>
+  <div class="grid-container scenes">
+    <app-scenes-button
+      [url]="biurko"
+      [name]="'Nocny'"
+      [hsv]=[42,24,100]
+      [imgName]="'night-mode.svg'">
+    </app-scenes-button>
+    <app-scenes-button
+      [url]="biurko"
+      [name]="'Jasność'"
+      [hsv]=[0,0,100]
+      [imgName]="'lightning.svg'">
+    </app-scenes-button>
+    <app-scenes-button
+      [url]="biurko"
+      [name]="'Red'"
+      [hsv]=[358,94,100]
+      [imgName]="'favorite.svg'">
+    </app-scenes-button>
 
-  <app-light-bulb-button
-    [url]="biurko"
-    [name]="'Biurko'"
-    [hsv]="biurkoHsv"
-  ></app-light-bulb-button>
-<!--  <app-light-bulb-button-->
-<!--    [url]="biurko"-->
-<!--    [name]="'Parapet'"></app-light-bulb-button>-->
+
+  </div>
+  <p class="category">Urządzenia</p>
+  <div class="row">
+    <app-light-bulb-button
+      [url]="biurko"
+      [name]="'Biurko'"
+      [hsv]="biurkoHsv"
+    ></app-light-bulb-button>
+  </div>
+
+  <!--  <app-light-bulb-button-->
+  <!--    [url]="biurko"-->
+  <!--    [name]="'Parapet'"></app-light-bulb-button>-->
   <ng-container *ngFor="let button of Buttons">
     <app-light-bulb-button
       [url]="button.ip"

@@ -19,7 +19,7 @@ export class LightBulbButtonComponent implements OnInit {
   @Input() hsv: Array<number>;
   toggle = true;
   status = 'On';
-  img = 'assets/svg/light_on.svg';
+  img = 'assets/svg/lights/light_on.svg';
   subject;
   disableClick = false;
   connectionStatus = 'Loading';
@@ -38,7 +38,7 @@ export class LightBulbButtonComponent implements OnInit {
           } else if (msg.state === 'Off' && this.toggle) {
             this.toggleButton();
           }
-        } else if (msg.task === 'color change'){
+        } else if (msg.task === 'color change') {
           this.hsv = [msg.hue, msg.saturation, msg.brightness];
         }
       }, // Called whenever there is a message from the server.
@@ -58,7 +58,7 @@ export class LightBulbButtonComponent implements OnInit {
   toggleButton() {
     this.toggle = !this.toggle;
     this.status = this.toggle ? 'On' : 'Off';
-    this.img = this.toggle ? 'assets/svg/light_on.svg' : 'assets/svg/light_off.svg';
+    this.img = this.toggle ? 'assets/svg/lights/light_on.svg' : 'assets/svg/lights/light_off.svg';
   }
 
   getStatus() {
@@ -69,19 +69,15 @@ export class LightBulbButtonComponent implements OnInit {
     this.toggleButton();
     const message = {
       task: 'state change',
-      state: this.status
+      state: this.status,
+      hue: this.hsv[0],
+      saturation: this.hsv[1],
+      brightness: this.hsv[2]
     };
     this.subject.next(message);
   }
 
   onLongPress() {
-    //   const navigationExtras: NavigationExtras = {
-    //     queryParams: {
-    //       state: this.status,
-    //       url: this.url
-    //     }
-    //   };
-    //   this.router.navigate(['color-pick'], navigationExtras);
     this._bottomSheet.open(ColorPickerComponent, {
       data: {url: this.url, state: this.status, hsv: this.hsv}
     });

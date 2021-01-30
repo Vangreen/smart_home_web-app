@@ -45,6 +45,7 @@ export class ColorPickerComponent implements OnInit {
   }
 
   changeColor($event: ColorEvent): void {
+    console.log("COLOR CHANGE PICKER");
     console.log(Math.round($event.color.hsv.h));
     this.butHue = Math.round($event.color.hsv.h);
     let brightnessLoc = 50;
@@ -66,7 +67,8 @@ export class ColorPickerComponent implements OnInit {
   }
 
   changeColorCircle(): void {
-    console.log(this.colorPicker.color.hsv.h);
+    console.log(this.colorPicker.color.hsv);
+    console.log("COLOR CHANGE PICKER Circle");
     this.butHue = this.colorPicker.color.hsv.h;
     this.subject.subscribe();
     const message = {

@@ -1,0 +1,39 @@
+.button{
+  width: 200px;
+  height: 60px;
+  margin: 15px;
+  border-radius:8px
+}
+
+.turnedOn {
+  background-color: white;
+}
+
+.turnedOff {
+  background-color: lightgrey;
+  opacity: 0.7;
+}
+
+.disabledClick{
+  pointer-events: none;
+  cursor: default;
+  background-color: indianred;
+  opacity: 0.7;
+}
+
+.img{
+  margin-top: 12px;
+  display: flex;
+  width: 32px;
+  height: 32px;
+}
+
+.scene{
+  position: unset;
+  font-weight: bold;
+  margin-top: -28px;
+  margin-left: -20px;
+
+}
+
+
