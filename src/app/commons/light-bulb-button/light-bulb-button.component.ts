@@ -42,13 +42,20 @@ export class LightBulbButtonComponent implements OnInit {
     this.stompClient = Stomp.over(ws);
     const that = this;
     this.stompClient.connect({}, function(frame) {
-      that.stompClient.subscribe('/device/device/12345', (message) => {
+      that.stompClient.subscribe('/device/device/' + that.serial, (message) => {
         if (message.body) {
           that.msg.push(message.body);
           const config = JSON.parse(message.body);
           if (config.task === 'state change' && config.state !== that.status){
             that.toggleButton();
           }else if (config.task === 'color change'){
+            that.hsv = [config.hue, config.saturation, config.brightness];
+          }else{
+            if (config.deviceState === 'On' && !that.toggle) {
+              that.toggleButton();
+            } else if (config.deviceState === 'Off' && that.toggle) {
+              that.toggleButton();
+            }
             that.hsv = [config.hue, config.saturation, config.brightness];
           }
         }
