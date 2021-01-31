@@ -65,7 +65,9 @@
   <ng-container *ngFor="let button of Buttons">
     <app-light-bulb-button
       [url]="button.ip"
-      [name]="button.deviceName"></app-light-bulb-button>
+      [name]="button.deviceName"
+      [serial]="button.serial"
+      [status]="button.deviceState" ></app-light-bulb-button>
   </ng-container>
 
 </div>
