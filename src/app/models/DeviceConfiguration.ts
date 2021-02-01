@@ -5,7 +5,7 @@ export class DeviceConfiguration {
   hue: number;
   sat: number;
   bright: number;
-  deviceState: string;
+  deviceStatus: string;
   deviceConnectionStatus: string;
   room: string;
   deviceType: string;
@@ -16,7 +16,7 @@ export class DeviceConfiguration {
     this.hue = body.hue;
     this.sat = body.sat;
     this.bright = body.bright;
-    this.deviceState = body.deviceState;
+    this.deviceStatus = body.deviceStatus;
     this.deviceConnectionStatus = body.deviceConnectionStatus;
     this.room = body.room;
     this.deviceType = body.deviceType;

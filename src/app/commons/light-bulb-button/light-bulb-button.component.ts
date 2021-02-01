@@ -24,13 +24,11 @@ export class LightBulbButtonComponent implements OnInit {
   @Input() hsv: Array<number>;
   @Input() status: string;
   toggle = true;
-  img = 'assets/svg/light_on.svg';
-  subject;
+  img = 'assets/svg/lights/light_on.svg';
   disableClick = false;
-  connectionStatus = 'Loading';
 
   ngOnInit(): void {
-    if (this.status === 'off'){
+    if (this.status === 'Off'){
       this.toggleButton();
     }
     this.initializeWebSocketConnection();
@@ -46,14 +44,14 @@ export class LightBulbButtonComponent implements OnInit {
         if (message.body) {
           that.msg.push(message.body);
           const config = JSON.parse(message.body);
-          if (config.task === 'state change' && config.state !== that.status){
+          if (config.task === 'status change' && config.status !== that.status){
             that.toggleButton();
           }else if (config.task === 'color change'){
             that.hsv = [config.hue, config.saturation, config.brightness];
-          }else{
-            if (config.deviceState === 'On' && !that.toggle) {
+          }else if (config.hue !== undefined){                                  // temp
+            if (config.deviceStatus === 'On' && !that.toggle) {
               that.toggleButton();
-            } else if (config.deviceState === 'Off' && that.toggle) {
+            } else if (config.deviceStatus === 'Off' && that.toggle) {
               that.toggleButton();
             }
             that.hsv = [config.hue, config.saturation, config.brightness];
@@ -79,12 +77,15 @@ export class LightBulbButtonComponent implements OnInit {
 
   enableDisableRule() {
     this.toggleButton();
-    this.sendMessage('/device/changeDeviceState/' + this.serial, '{"state": "' + this.status + '"}');
+    const message = {
+      status: this.status
+    };
+    this.sendMessage('/device/changeDeviceStatus/' + this.serial, JSON.stringify(message));
   }
 
   onLongPress() {
     this._bottomSheet.open(ColorPickerComponent, {
-      data: {url: this.url, state: this.status, hsv: this.hsv}
+      data: {url: this.url, status: this.status, hsv: this.hsv, serial: this.serial}
     });
   }
 }
