@@ -29,7 +29,7 @@ export class FirstScreenComponent implements OnInit {
 
   }
 
-  apiHandler() {
+  public apiHandler() {
     this.apiService.getDevices().subscribe((data: Array<DeviceConfiguration>) => {
       console.log(data);
       this.Buttons = data;

@@ -17,4 +17,10 @@ export class ApiService {
     // console.log()
     this.httpClient.get(`http://192.168.0.16:9999/added/` + serial).subscribe(data => console.log(data));
   }
+
+  public unSetAdded(serial: string){
+    console.log("SetAdded: " + serial)
+    // console.log()
+    this.httpClient.get(`http://192.168.0.16:9999/unsetAdded/` + serial).subscribe(data => console.log(data));
+  }
 }

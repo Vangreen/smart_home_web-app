@@ -1,8 +1,8 @@
 import {Component, Inject, Input, OnInit} from '@angular/core';
-import {webSocket} from 'rxjs/webSocket';
 import {ColorEvent} from 'ngx-color';
 import {MAT_BOTTOM_SHEET_DATA} from '@angular/material/bottom-sheet';
 import iro from '@jaames/iro';
+import {ApiService} from "../../service/api.service";
 
 declare var SockJS;
 declare var Stomp;
@@ -31,7 +31,7 @@ export class ColorPickerComponent implements OnInit {
   colorPicker: iro.ColorPicker;
   public stompClient;
 
-  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: DialogData) {
+  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: DialogData, private apiService: ApiService) {
 
 
     this.url = data.url;
@@ -53,14 +53,14 @@ export class ColorPickerComponent implements OnInit {
     const ws = new SockJS(serverUrl);
     this.stompClient = Stomp.over(ws);
     const that = this;
-    this.stompClient.connect({}, function(frame) {
+    this.stompClient.connect({}, function (frame) {
       that.stompClient.subscribe('/device/changeDeviceColor/' + that.serial, (message) => {
       });
     });
   }
 
   sendMessage(path, message) {
-    this.stompClient.send(path , {}, message);
+    this.stompClient.send(path, {}, message);
   }
 
   changeColor($event: ColorEvent): void {
@@ -112,6 +112,11 @@ export class ColorPickerComponent implements OnInit {
       });
     }
     this.colorPicker.color.hsv;
+  }
+
+
+  onDeleteClick() {
+    this.apiService.unSetAdded(this.serial);
   }
 
 
