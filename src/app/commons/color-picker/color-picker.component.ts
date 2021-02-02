@@ -2,7 +2,8 @@ import {Component, Inject, Input, OnInit} from '@angular/core';
 import {ColorEvent} from 'ngx-color';
 import {MAT_BOTTOM_SHEET_DATA} from '@angular/material/bottom-sheet';
 import iro from '@jaames/iro';
-import {ApiService} from "../../service/api.service";
+import {ApiService} from '../../service/api.service';
+import {environment} from '../../../environments/environment';
 
 declare var SockJS;
 declare var Stomp;
@@ -49,7 +50,7 @@ export class ColorPickerComponent implements OnInit {
   }
 
   initializeWebSocketConnection() {
-    const serverUrl = 'http://192.168.0.16:9999/mywebsocket';
+    const serverUrl = environment.serverURL + '/mywebsocket';
     const ws = new SockJS(serverUrl);
     this.stompClient = Stomp.over(ws);
     const that = this;

@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {ColorPickerComponent} from "../color-picker/color-picker.component"
 import {FirstScreenComponent} from "../../first-screen/first-screen.component";
+import {environment} from '../../../environments/environment';
 
 declare var SockJS;
 declare var Stomp;
@@ -36,7 +37,7 @@ export class LightBulbButtonComponent implements OnInit {
   }
 
   initializeWebSocketConnection() {
-    const serverUrl = 'http://192.168.0.16:9999/mywebsocket';
+    const serverUrl = environment.serverURL + '/mywebsocket';
     const ws = new SockJS(serverUrl);
     this.stompClient = Stomp.over(ws);
     const that = this;
