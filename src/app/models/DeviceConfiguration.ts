@@ -9,6 +9,7 @@ export class DeviceConfiguration {
   deviceConnectionStatus: string;
   room: string;
   deviceType: string;
+  added: boolean;
   constructor(body) {
     this.serial = body.serial;
     this.ip = body.ip;
@@ -20,5 +21,6 @@ export class DeviceConfiguration {
     this.deviceConnectionStatus = body.deviceConnectionStatus;
     this.room = body.room;
     this.deviceType = body.deviceType;
+    this.added = body.added;
   }
 }

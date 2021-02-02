@@ -54,6 +54,7 @@
   <div class="row">
     <ng-container *ngFor="let button of Buttons">
       <app-light-bulb-button
+        *ngIf="button.added === true"
         [url]="button.ip"
         [name]="button.deviceName"
         [serial]="button.serial"
@@ -61,3 +62,4 @@
     </ng-container>
   </div>
 </div>
+

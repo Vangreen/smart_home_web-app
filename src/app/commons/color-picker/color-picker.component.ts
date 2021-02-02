@@ -49,7 +49,7 @@ export class ColorPickerComponent implements OnInit {
   }
 
   initializeWebSocketConnection() {
-    const serverUrl = 'http://192.168.2.166:9999/mywebsocket';
+    const serverUrl = 'http://192.168.0.16:9999/mywebsocket';
     const ws = new SockJS(serverUrl);
     this.stompClient = Stomp.over(ws);
     const that = this;
