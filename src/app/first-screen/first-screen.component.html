@@ -14,11 +14,11 @@
     <mat-icon>add</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item>
+    <button mat-menu-item mat-menu-item (click)="openAccessoryDialog()">
       <mat-icon>add_to_queue</mat-icon>
       <span>Dodaj akcesoria</span>
     </button>
-    <button mat-menu-item>
+    <button mat-menu-item (click)="openSceneDialog()">
       <mat-icon>library_add</mat-icon>
       <span>Dodaj scenerie</span>
     </button>

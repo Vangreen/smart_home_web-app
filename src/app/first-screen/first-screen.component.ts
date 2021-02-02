@@ -3,6 +3,9 @@ import {BottomSheetComponent} from "../commons/bottom-sheet/bottom-sheet.compone
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import { ApiService } from '../service/api.service';
 import {DeviceConfiguration} from '../models/DeviceConfiguration';
+import {MatDialog} from '@angular/material/dialog';
+import {SceneDialogComponent} from "../commons/scene-dialog/scene-dialog.component";
+import {AccesoryDialogComponent} from "../commons/accesory-dialog/accesory-dialog.component";
 
 @Component({
   selector: 'app-first-screen',
@@ -19,7 +22,7 @@ export class FirstScreenComponent implements OnInit {
   biurkoHsv= [0,0,100];
   parapet = 'ws://192.168.2.125:81';
   Buttons: Array<DeviceConfiguration>;
-  constructor(private _bottomSheet: MatBottomSheet, private apiService: ApiService) {
+  constructor(private _bottomSheet: MatBottomSheet, private apiService: ApiService, public dialog: MatDialog) {
     this.room = 'Salon';
     this.apiService.getDevices().subscribe((data: Array<DeviceConfiguration>) => {
       console.log(data);
@@ -34,6 +37,24 @@ export class FirstScreenComponent implements OnInit {
   setRoom(value: string): void {
     this._bottomSheet.dismiss(value);
   }
+
+  openSceneDialog() {
+    const dialogRef = this.dialog.open(SceneDialogComponent, {restoreFocus: false});
+
+    // Manually restore focus to the menu trigger since the element that
+    // opens the dialog won't be in the DOM any more when the dialog closes.
+    // dialogRef.afterClosed().subscribe(() => this.menuTrigger.focus());
+
+}
+
+openAccessoryDialog() {
+    const dialogRef = this.dialog.open(AccesoryDialogComponent, {restoreFocus: false});
+
+    // Manually restore focus to the menu trigger since the element that
+    // opens the dialog won't be in the DOM any more when the dialog closes.
+    // dialogRef.afterClosed().subscribe(() => this.menuTrigger.focus());
+
+}
 
 
   openBottomSheet(): void {

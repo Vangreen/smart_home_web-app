@@ -30,6 +30,9 @@ import {ColorCircleModule} from "ngx-color/circle";
 import {MatMenuModule} from '@angular/material/menu';
 import { ScenesButtonComponent } from './commons/scenes-button/scenes-button.component';
 import { ScenesDetailsComponent } from './commons/scenes-details/scenes-details.component';
+import { SceneDialogComponent } from './commons/scene-dialog/scene-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import { AccesoryDialogComponent } from './commons/accesory-dialog/accesory-dialog.component';
 
 
 @NgModule({
@@ -46,6 +49,8 @@ import { ScenesDetailsComponent } from './commons/scenes-details/scenes-details.
     ColorPickerComponent,
     ScenesButtonComponent,
     ScenesDetailsComponent,
+    SceneDialogComponent,
+    AccesoryDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,7 +69,8 @@ import { ScenesDetailsComponent } from './commons/scenes-details/scenes-details.
     ColorSketchModule,
     MatTabsModule,
     ColorCircleModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
