@@ -6,7 +6,6 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
-import {BottomNavbarComponent} from './commons/bottom-navbar/bottom-navbar.component';
 import {IgxBottomNavModule} from 'igniteui-angular';
 import {FirstScreenComponent} from './first-screen/first-screen.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
@@ -40,7 +39,6 @@ import {MatStepperModule} from '@angular/material/stepper';
 @NgModule({
   declarations: [
     AppComponent,
-    BottomNavbarComponent,
     FirstScreenComponent,
     LightBulbButtonComponent,
     BlindButtonComponent,
