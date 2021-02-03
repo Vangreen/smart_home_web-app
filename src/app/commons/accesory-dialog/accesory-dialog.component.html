@@ -1,26 +1,56 @@
 <mat-dialog-content>
-  <mat-selection-list #button>
-    <ng-container *ngFor="let button of Buttons">
-      <mat-list-option [value]="button">
+  <mat-vertical-stepper linear #stepper>
+    <mat-step [editable]="isEditable">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Wybierz urządzenie</ng-template>
+        <mat-selection-list #button >
+          <ng-container *ngFor="let button of Buttons">
+            <mat-list-option [value]="button">
 
-        <img mat-list-icon src="{{src}}">
-        {{button.serial}}
+              <img mat-list-icon src="{{src}}">
+              {{button.serial}}
 
-      </mat-list-option>
-    </ng-container>
-  </mat-selection-list>
+            </mat-list-option>
+          </ng-container>
+        </mat-selection-list>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup" [editable]="isEditable">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Nazwa oraz pokój</ng-template>
+        <div>
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="secondCtrl" [(ngModel)]="name"
+                   required>
+          </mat-form-field>
+        </div>
+        <mat-form-field>
+          <mat-label>Room</mat-label>
+          <input matInput formControlName="secondCtrl" [(ngModel)]="room"
+                 required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step id="third">
+      <ng-template matStepLabel>Koniec</ng-template>
+      <div class="center">
+        <app-light-bulb-button
+          [name]="name"
+        ></app-light-bulb-button>
+      </div>
+      <div class="center">
+        <button mat-button mat-dialog-close (click)="onOkClick(button.selectedOptions.selected[0]?.value)">Dodaj
+        </button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
 </mat-dialog-content>
-<div>
-  <mat-form-field class="example-form-field">
-    <mat-label>Name</mat-label>
-    <input matInput type="text" [(ngModel)]="name">
-  </mat-form-field>
-</div>
-<mat-form-field class="example-form-field">
-  <mat-label>Room</mat-label>
-  <input matInput type="text" [(ngModel)]="room">
-</mat-form-field>
-<mat-dialog-actions>
-  <button mat-button mat-dialog-close>Close</button>
-  <button mat-button mat-dialog-close (click)="onOkClick(button.selectedOptions.selected[0]?.value)">Ok</button>
-</mat-dialog-actions>
+
