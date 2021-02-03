@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {webSocket} from 'rxjs/webSocket';
 import {Router} from '@angular/router';
-import {MatBottomSheet} from "@angular/material/bottom-sheet";
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
 // import {ColorPickerComponent} from "../color-picker/color-picker.component"
-import {ScenesDetailsComponent} from "../scenes-details/scenes-details.component";
+import {ScenesDetailsComponent} from '../scenes-details/scenes-details.component';
 
 @Component({
   selector: 'app-scenes-button',
@@ -27,7 +27,7 @@ export class ScenesButtonComponent implements OnInit {
   connectionStatus = 'Loading';
 
   ngOnInit(): void {
-    console.log("HUEEEEEEEE");
+    console.log('HUEEEEEEEE');
     this.img = 'assets/svg/scenes/' + this.imgName;
     this.subject = webSocket({
       url: this.url
@@ -37,32 +37,32 @@ export class ScenesButtonComponent implements OnInit {
         if (msg.task === 'state change' || msg.response === 'connected') {
           this.connectionStatus = '';
           if (msg.state === 'On' && this.arrayEquals(this.hsv, [msg.hue, msg.saturation, msg.brightness])) {
-            console.log("on");
+            console.log('on');
             // this.toggleButton();
             this.toggle = true;
           } else if (msg.state === 'Off') {
-            console.log("off");
+            console.log('off');
             // this.toggleButton();
             this.toggle = false;
           } else if (!this.arrayEquals(this.hsv, [msg.hue, msg.saturation, msg.brightness])) {
-            console.log("off");
+            console.log('off');
             // this.toggleButton();
             this.toggle = false;
           }
         } else if (msg.task === 'color change') {
-          console.log("ALFAAAAA");
+          console.log('ALFAAAAA');
 
           if (msg.state === 'On' && this.arrayEquals(this.hsv, [msg.hue, msg.saturation, msg.brightness])) {
-            console.log("on -color");
+            console.log('on -color');
             console.log(this.arrayEquals(this.hsv, [msg.hue, msg.saturation, msg.brightness]));
             // this.toggleButton();
             this.toggle = true;
           } else if (msg.state === 'Off') {
-            console.log("off");
+            console.log('off');
             // this.toggleButton();
             this.toggle = false;
           } else if (!this.arrayEquals(this.hsv, [msg.hue, msg.saturation, msg.brightness])) {
-            console.log("off");
+            console.log('off');
             // this.toggleButton();
             this.toggle = false;
           }
@@ -100,9 +100,9 @@ export class ScenesButtonComponent implements OnInit {
   }
 
   enableDisableRule() {
-    console.log("ENABLE DISABLE")
-    if(this.status === 'On'){
-      console.log("detect on off")
+    console.log('ENABLE DISABLE');
+    if (this.status === 'On'){
+      console.log('detect on off');
       const message = {
         task: 'state change',
         state: 'On',

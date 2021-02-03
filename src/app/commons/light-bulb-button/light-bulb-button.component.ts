@@ -1,8 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {webSocket} from 'rxjs/webSocket';
 import {Router} from '@angular/router';
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {ColorPickerComponent} from "../color-picker/color-picker.component"
+import {FirstScreenComponent} from "../../first-screen/first-screen.component";
+import {environment} from '../../../environments/environment';
+
+declare var SockJS;
+declare var Stomp;
 
 @Component({
   selector: 'app-light-bulb-button',
@@ -11,48 +15,55 @@ import {ColorPickerComponent} from "../color-picker/color-picker.component"
 })
 export class LightBulbButtonComponent implements OnInit {
 
-  constructor(private router: Router, private _bottomSheet: MatBottomSheet) {
+  constructor(private router: Router, private _bottomSheet: MatBottomSheet, private firstScreen: FirstScreenComponent) {
   }
 
-  @Input() url: string;
+  public stompClient;
+  public msg = [];
+  @Input() serial: number;
   @Input() name: string;
   @Input() hsv: Array<number>;
+  @Input() status: string;
   toggle = true;
-  status = 'On';
   img = 'assets/svg/lights/light_on.svg';
-  subject;
   disableClick = false;
-  connectionStatus = 'Loading';
 
   ngOnInit(): void {
-    this.subject = webSocket({
-      url: this.url
-    });
-    this.subject.subscribe(
-      msg => {
-        console.log('message received: ' + JSON.stringify(msg));
-        if (msg.task === 'state change' || msg.response === 'connected') {
-          this.connectionStatus = '';
-          if (msg.state === 'On' && !this.toggle) {
-            this.toggleButton();
-          } else if (msg.state === 'Off' && this.toggle) {
-            this.toggleButton();
+    if (this.status === 'Off') {
+      this.toggleButton();
+    }
+    this.initializeWebSocketConnection();
+  }
+
+  initializeWebSocketConnection() {
+    const serverUrl = environment.serverURL + '/mywebsocket';
+    const ws = new SockJS(serverUrl);
+    this.stompClient = Stomp.over(ws);
+    const that = this;
+    this.stompClient.connect({}, function (frame) {
+      that.stompClient.subscribe('/device/device/' + that.serial, (message) => {
+        if (message.body) {
+          that.msg.push(message.body);
+          const config = JSON.parse(message.body);
+          if (config.task === 'status change' && config.status !== that.status) {
+            that.toggleButton();
+          } else if (config.task === 'color change') {
+            that.hsv = [config.hue, config.saturation, config.brightness];
+          } else if (config.hue !== undefined) {                                  // temp
+            if (config.deviceStatus === 'On' && !that.toggle) {
+              that.toggleButton();
+            } else if (config.deviceStatus === 'Off' && that.toggle) {
+              that.toggleButton();
+            }
+            that.hsv = [config.hue, config.saturation, config.brightness];
           }
-        } else if (msg.task === 'color change') {
-          this.hsv = [msg.hue, msg.saturation, msg.brightness];
         }
-      }, // Called whenever there is a message from the server.
-      err => {
-        console.log(err);
-        this.connectionStatus = 'Couldnt connect';
-        this.disableClick = true;
-      }, // Called if at any point WebSocket API signals some kind of error.
-      () => {
-        console.log('complete');
-        this.connectionStatus = 'disconnected';
-        this.disableClick = true;
-      } // Called when connection is closed (for whatever reason).
-    );
+      });
+    });
+  }
+
+  sendMessage(path, message) {
+    this.stompClient.send(path, {}, message);
   }
 
   toggleButton() {
@@ -68,18 +79,17 @@ export class LightBulbButtonComponent implements OnInit {
   enableDisableRule() {
     this.toggleButton();
     const message = {
-      task: 'state change',
-      state: this.status,
-      hue: this.hsv[0],
-      saturation: this.hsv[1],
-      brightness: this.hsv[2]
+      status: this.status
     };
-    this.subject.next(message);
+    this.sendMessage('/device/changeDeviceStatus/' + this.serial, JSON.stringify(message));
   }
 
   onLongPress() {
-    this._bottomSheet.open(ColorPickerComponent, {
-      data: {url: this.url, state: this.status, hsv: this.hsv}
+    const bottomSheet = this._bottomSheet.open(ColorPickerComponent, {
+      data: {status: this.status, hsv: this.hsv, serial: this.serial}
     });
+    bottomSheet.afterDismissed().subscribe(data =>
+      this.firstScreen.apiHandler()
+    )
   }
 }

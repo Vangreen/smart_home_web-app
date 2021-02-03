@@ -33,6 +33,7 @@ import { ScenesDetailsComponent } from './commons/scenes-details/scenes-details.
 import { SceneDialogComponent } from './commons/scene-dialog/scene-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import { AccesoryDialogComponent } from './commons/accesory-dialog/accesory-dialog.component';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -70,7 +71,8 @@ import { AccesoryDialogComponent } from './commons/accesory-dialog/accesory-dial
     MatTabsModule,
     ColorCircleModule,
     MatMenuModule,
-    MatDialogModule
+    MatDialogModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

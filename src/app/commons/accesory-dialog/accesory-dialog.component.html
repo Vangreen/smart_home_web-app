@@ -1,7 +1,26 @@
 <mat-dialog-content>
-  This is a dialog
+  <mat-selection-list #button>
+    <ng-container *ngFor="let button of Buttons">
+      <mat-list-option [value]="button">
+
+        <img mat-list-icon src="{{src}}">
+        {{button.serial}}
+
+      </mat-list-option>
+    </ng-container>
+  </mat-selection-list>
 </mat-dialog-content>
+<div>
+  <mat-form-field class="example-form-field">
+    <mat-label>Name</mat-label>
+    <input matInput type="text" [(ngModel)]="name">
+  </mat-form-field>
+</div>
+<mat-form-field class="example-form-field">
+  <mat-label>Room</mat-label>
+  <input matInput type="text" [(ngModel)]="room">
+</mat-form-field>
 <mat-dialog-actions>
   <button mat-button mat-dialog-close>Close</button>
-  <button mat-button>Ok</button>
+  <button mat-button mat-dialog-close (click)="onOkClick(button.selectedOptions.selected[0]?.value)">Ok</button>
 </mat-dialog-actions>

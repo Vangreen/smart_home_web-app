@@ -52,20 +52,12 @@
   </div>
   <p class="category">Urządzenia</p>
   <div class="row">
-    <app-light-bulb-button
-      [url]="biurko"
-      [name]="'Biurko'"
-      [hsv]="biurkoHsv"
-    ></app-light-bulb-button>
+    <ng-container *ngFor="let button of Buttons">
+      <app-light-bulb-button
+        [name]="button.deviceName"
+        [serial]="button.serial"
+        [status]="button.deviceStatus" ></app-light-bulb-button>
+    </ng-container>
   </div>
-
-  <!--  <app-light-bulb-button-->
-  <!--    [url]="biurko"-->
-  <!--    [name]="'Parapet'"></app-light-bulb-button>-->
-  <ng-container *ngFor="let button of Buttons">
-    <app-light-bulb-button
-      [url]="button.ip"
-      [name]="button.deviceName"></app-light-bulb-button>
-  </ng-container>
-
 </div>
+
