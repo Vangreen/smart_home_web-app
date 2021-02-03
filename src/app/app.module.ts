@@ -34,6 +34,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import { AccesoryDialogComponent } from './commons/accesory-dialog/accesory-dialog.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatStepperModule} from '@angular/material/stepper';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import {MatStepperModule} from '@angular/material/stepper';
     MatDialogModule,
     FormsModule,
     MatStepperModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

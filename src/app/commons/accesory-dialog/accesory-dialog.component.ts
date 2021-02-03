@@ -3,6 +3,7 @@ import {ApiService} from '../../service/api.service';
 import {UnassignedDevice} from '../../models/UnassignedDevice';
 import {environment} from '../../../environments/environment';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {SnackbarService} from "../snack-bar/snackbar.service";
 
 declare var SockJS;
 declare var Stomp;
@@ -23,7 +24,7 @@ export class AccesoryDialogComponent implements OnInit {
   secondFormGroup: FormGroup;
   isEditable = true;
 
-  constructor(private apiService: ApiService, private _formBuilder: FormBuilder) {
+  constructor(private apiService: ApiService, private _formBuilder: FormBuilder, private snackBarService: SnackbarService) {
     this.src = 'assets/svg/lights/light_on.svg';
   }
 
@@ -53,6 +54,7 @@ export class AccesoryDialogComponent implements OnInit {
   onOkClick(device: UnassignedDevice): void {
       console.log(device.serial.toString());
       this.apiService.addDevice(device.serial, device.deviceType, this.name, this.room);
+      this.snackBarService.openSnackBar("Urządzenie dodano");
   }
 
 }
