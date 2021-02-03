@@ -51,12 +51,8 @@ export class AccesoryDialogComponent implements OnInit {
 
 
   onOkClick(device: UnassignedDevice): void {
-    if (this.name !== null && this.room !== null) {
       console.log(device.serial.toString());
       this.apiService.addDevice(device.serial, device.deviceType, this.name, this.room);
-    } else {
-      console.log('null');
-    }
   }
 
 }
