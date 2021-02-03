@@ -1,6 +1,6 @@
 import {Component, Inject, Input, OnInit} from '@angular/core';
 import {ColorEvent} from 'ngx-color';
-import {MAT_BOTTOM_SHEET_DATA} from '@angular/material/bottom-sheet';
+import {MAT_BOTTOM_SHEET_DATA, MatBottomSheet} from '@angular/material/bottom-sheet';
 import iro from '@jaames/iro';
 import {ApiService} from '../../service/api.service';
 import {environment} from '../../../environments/environment';
@@ -31,7 +31,7 @@ export class ColorPickerComponent implements OnInit {
   colorPicker: iro.ColorPicker;
   public stompClient;
 
-  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: DialogData, private apiService: ApiService) {
+  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: DialogData, private apiService: ApiService, private _bottomSheet: MatBottomSheet,) {
 
 
     this.status = data.status;
@@ -114,6 +114,7 @@ export class ColorPickerComponent implements OnInit {
 
   onDeleteClick() {
     this.apiService.deleteDevice(this.serial);
+    this._bottomSheet.dismiss();
   }
 
 
