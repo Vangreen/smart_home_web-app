@@ -12,7 +12,7 @@ export interface DialogData {
   url: string;
   status: string;
   hsv: Array<number>;
-  serial: string;
+  serial: number;
 }
 
 @Component({
@@ -21,9 +21,8 @@ export interface DialogData {
   styleUrls: ['./color-picker.component.css']
 })
 export class ColorPickerComponent implements OnInit {
-  @Input() url: string;
   status: string;
-  serial: string;
+  serial: number;
   hsv: Array<number>;
   butHue: number;
   message: string;
@@ -35,7 +34,6 @@ export class ColorPickerComponent implements OnInit {
   constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: DialogData, private apiService: ApiService) {
 
 
-    this.url = data.url;
     this.status = data.status;
     // color palete
     this.colors = ['#FFFFFF', '#999999', '#FFFFFF', '#F44E3B', '#FE9200', '#FCDC00', '#DBDF00', '#A4DD00', '#68CCCA', '#73D8FF', '#AEA1FF', '#FDA1FF', '#333333', '#808080', '#cccccc', '#D33115', '#E27300', '#FCC400', '#B0BC00', '#68BC00', '#16A5A5', '#009CE0', '#7B64FF', '#FA28FF', '#000000', '#666666', '#B3B3B3', '#9F0500', '#C45100', '#FB9E00', '#808900', '#194D33', '#0C797D', '#0062B1', '#653294', '#AB149E'];
@@ -44,7 +42,6 @@ export class ColorPickerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.url);
     console.log(this.status);
     this.initializeWebSocketConnection();
   }
@@ -112,12 +109,11 @@ export class ColorPickerComponent implements OnInit {
         borderColor: '#fff',
       });
     }
-    this.colorPicker.color.hsv;
   }
 
 
   onDeleteClick() {
-    this.apiService.unSetAdded(this.serial);
+    this.apiService.deleteDevice(this.serial);
   }
 
 

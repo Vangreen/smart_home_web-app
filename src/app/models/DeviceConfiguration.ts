@@ -1,26 +1,22 @@
 export class DeviceConfiguration {
   serial: number;
-  ip: string;
   deviceName: string;
   hue: number;
-  sat: number;
-  bright: number;
+  saturation: number;
+  brightness: number;
   deviceStatus: string;
   deviceConnectionStatus: string;
   room: string;
   deviceType: string;
-  added: boolean;
   constructor(body) {
     this.serial = body.serial;
-    this.ip = body.ip;
     this.deviceName = body.deviceName;
     this.hue = body.hue;
-    this.sat = body.sat;
-    this.bright = body.bright;
+    this.saturation = body.saturation;
+    this.brightness = body.brightness;
     this.deviceStatus = body.deviceStatus;
     this.deviceConnectionStatus = body.deviceConnectionStatus;
     this.room = body.room;
     this.deviceType = body.deviceType;
-    this.added = body.added;
   }
 }

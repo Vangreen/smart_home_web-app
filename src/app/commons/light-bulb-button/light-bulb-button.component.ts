@@ -20,7 +20,6 @@ export class LightBulbButtonComponent implements OnInit {
 
   public stompClient;
   public msg = [];
-  @Input() url: string;
   @Input() serial: number;
   @Input() name: string;
   @Input() hsv: Array<number>;
@@ -87,7 +86,7 @@ export class LightBulbButtonComponent implements OnInit {
 
   onLongPress() {
     const bottomSheet = this._bottomSheet.open(ColorPickerComponent, {
-      data: {url: this.url, status: this.status, hsv: this.hsv, serial: this.serial}
+      data: {status: this.status, hsv: this.hsv, serial: this.serial}
     });
     bottomSheet.afterDismissed().subscribe(data =>
       this.firstScreen.apiHandler()
