@@ -1,10 +1,4 @@
-import {
-  Directive,
-  Output,
-  EventEmitter,
-  HostBinding,
-  HostListener
-} from '@angular/core';
+import {Directive, EventEmitter, HostBinding, HostListener, Output} from '@angular/core';
 
 @Directive({
   selector: '[long-press]'
@@ -14,6 +8,7 @@ export class LongPress {
   longPressing: boolean;
   timeout: any;
   interval: number;
+  touch: TouchInput;
 
   @Output()
   onLongPress = new EventEmitter();
@@ -22,10 +17,14 @@ export class LongPress {
   onLongPressing = new EventEmitter();
 
   @HostBinding('class.press')
-  get press() { return this.pressing; }
+  get press() {
+    return this.pressing;
+  }
 
   @HostBinding('class.longpress')
-  get longPress() { return this.longPressing; }
+  get longPress() {
+    return this.longPressing;
+  }
 
   @HostListener('touchstart', ['$event'])
   @HostListener('mousedown', ['$event'])
@@ -35,9 +34,7 @@ export class LongPress {
     this.timeout = setTimeout(() => {
       this.longPressing = true;
       this.onLongPress.emit(event);
-      // this.interval = setInterval(() => {
-      //   this.onLongPressing.emit(event);
-      // }, 50);
+
     }, 500);
   }
 
@@ -47,7 +44,11 @@ export class LongPress {
   endPress() {
     clearTimeout(this.timeout);
     clearInterval(this.interval);
-    this.longPressing = false;
-    this.pressing = false;
+    if (this.longPressing === true) {
+      this.longPressing = false;
+      this.pressing = false;
+      //TODO Fix this, cause console log error
+      this.touch.destroy();
+    }
   }
 }

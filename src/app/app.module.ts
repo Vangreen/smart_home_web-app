@@ -20,7 +20,7 @@ import {BlindButtonComponent} from './commons/blind-button/blind-button.componen
 import {LoginScreenComponent} from './login-screen/login-screen.component';
 import {ContainerComponent} from './container/container.component';
 import {BottomSheetComponent} from './commons/bottom-sheet/bottom-sheet.component';
-import {LongPress} from '../../long-press';
+import {LongPress} from './service/long-press';
 import { HttpClientModule } from '@angular/common/http';
 import {ColorSketchModule} from 'ngx-color/sketch';
 import {ColorPickerComponent} from './commons/color-picker/color-picker.component';
