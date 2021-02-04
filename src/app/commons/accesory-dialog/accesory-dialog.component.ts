@@ -30,7 +30,9 @@ export class AccesoryDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeWebSocketConnection();
-    this.secondFormGroup = this._formBuilder.group({
+    this.firstFormGroup = this._formBuilder.group({
+      secondCtrl: ['', Validators.required]
+    });    this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required]
     });
   }
