@@ -1,9 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {webSocket} from 'rxjs/webSocket';
 import {Router} from '@angular/router';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 // import {ColorPickerComponent} from "../color-picker/color-picker.component"
 import {ScenesDetailsComponent} from '../scenes-details/scenes-details.component';
+import {environment} from "../../../environments/environment";
+
+declare var SockJS;
+declare var Stomp;
 
 @Component({
   selector: 'app-scenes-button',
@@ -15,7 +18,7 @@ export class ScenesButtonComponent implements OnInit {
   constructor(private router: Router, private _bottomSheet: MatBottomSheet) {
   }
 
-  @Input() url: string;
+  @Input() serial: string;
   @Input() name: string;
   @Input() hsv: Array<number>;
   @Input() imgName: string;
@@ -25,61 +28,58 @@ export class ScenesButtonComponent implements OnInit {
   subject;
   disableClick = false;
   connectionStatus = 'Loading';
+  public stompClient;
+  public msg = [];
 
   ngOnInit(): void {
     console.log('HUEEEEEEEE');
     this.img = 'assets/svg/scenes/' + this.imgName;
-    this.subject = webSocket({
-      url: this.url
-    });
-    this.subject.subscribe(
-      msg => {
-        if (msg.task === 'state change' || msg.response === 'connected') {
-          this.connectionStatus = '';
-          if (msg.state === 'On' && this.arrayEquals(this.hsv, [msg.hue, msg.saturation, msg.brightness])) {
-            console.log('on');
-            // this.toggleButton();
-            this.toggle = true;
-          } else if (msg.state === 'Off') {
-            console.log('off');
-            // this.toggleButton();
-            this.toggle = false;
-          } else if (!this.arrayEquals(this.hsv, [msg.hue, msg.saturation, msg.brightness])) {
-            console.log('off');
-            // this.toggleButton();
-            this.toggle = false;
-          }
-        } else if (msg.task === 'color change') {
-          console.log('ALFAAAAA');
+    const serverUrl = environment.serverURL + '/mywebsocket';
+    const ws = new SockJS(serverUrl);
+    this.stompClient = Stomp.over(ws);
+    const that = this;
+    this.stompClient.connect({}, function (frame) {
+      that.stompClient.subscribe('/device/device/' + that.serial, (message) => {
+        if (message.body) {
+          that.msg.push(message.body);
+          const config = JSON.parse(message.body);
+          if (config.task === 'state change' || config.response === 'connected') {
+            this.connectionStatus = '';
+            if (config.state === 'On' && this.arrayEquals(this.hsv, [config.hue, config.saturation, config.brightness])) {
+              console.log('on');
+              // this.toggleButton();
+              this.toggle = true;
+            } else if (config.state === 'Off') {
+              console.log('off');
+              // this.toggleButton();
+              this.toggle = false;
+            } else if (!this.arrayEquals(this.hsv, [config.hue, config.saturation, config.brightness])) {
+              console.log('off');
+              // this.toggleButton();
+              this.toggle = false;
+            }
+          } else if (config.task === 'color change') {
+            console.log('ALFAAAAA');
 
-          if (msg.state === 'On' && this.arrayEquals(this.hsv, [msg.hue, msg.saturation, msg.brightness])) {
-            console.log('on -color');
-            console.log(this.arrayEquals(this.hsv, [msg.hue, msg.saturation, msg.brightness]));
-            // this.toggleButton();
-            this.toggle = true;
-          } else if (msg.state === 'Off') {
-            console.log('off');
-            // this.toggleButton();
-            this.toggle = false;
-          } else if (!this.arrayEquals(this.hsv, [msg.hue, msg.saturation, msg.brightness])) {
-            console.log('off');
-            // this.toggleButton();
-            this.toggle = false;
+            if (config.state === 'On' && this.arrayEquals(this.hsv, [config.hue, config.saturation, config.brightness])) {
+              console.log('on -color');
+              console.log(this.arrayEquals(this.hsv, [config.hue, config.saturation, config.brightness]));
+              // this.toggleButton();
+              this.toggle = true;
+            } else if (config.state === 'Off') {
+              console.log('off');
+              // this.toggleButton();
+              this.toggle = false;
+            } else if (!this.arrayEquals(this.hsv, [config.hue, config.saturation, config.brightness])) {
+              console.log('off');
+              // this.toggleButton();
+              this.toggle = false;
+            }
+            // this.hsv = [msg.hue, msg.saturation, msg.brightness];
           }
-          // this.hsv = [msg.hue, msg.saturation, msg.brightness];
         }
-      }, // Called whenever there is a message from the server.
-      err => {
-        console.log(err);
-        this.connectionStatus = 'Couldnt connect';
-        this.disableClick = true;
-      }, // Called if at any point WebSocket API signals some kind of error.
-      () => {
-        console.log('complete');
-        this.connectionStatus = 'disconnected';
-        this.disableClick = true;
-      } // Called when connection is closed (for whatever reason).
-    );
+      });
+    });
   }
 
   arrayEquals(a, b) {
@@ -101,27 +101,33 @@ export class ScenesButtonComponent implements OnInit {
 
   enableDisableRule() {
     console.log('ENABLE DISABLE');
-    if (this.status === 'On'){
-      console.log('detect on off');
-      const message = {
-        task: 'state change',
-        state: 'On',
-        hue: this.hsv[0],
-        saturation: this.hsv[1],
-        brightness: this.hsv[2]
-      };
-      this.subject.next(message);
-    }
+    console.log(this.serial);
+    // if (this.status === 'On') {
+    //   console.log('detect on off');
+    //   const message = {
+    //     task: 'state change',
+    //     state: 'On',
+    //     hue: this.hsv[0],
+    //     saturation: this.hsv[1],
+    //     brightness: this.hsv[2]
+    //   };
+    //   this.sendMessage('/device/changeDeviceColor/' + this.serial, JSON.stringify(message));
+    // }
     // this.toggleButton();
     const message = {
       task: 'color change',
-      state: this.status,
+      status: this.status,
       hue: this.hsv[0],
       saturation: this.hsv[1],
       brightness: this.hsv[2]
     };
-    this.subject.next(message);
+    this.sendMessage('/device/changeDeviceColor/' + this.serial, JSON.stringify(message));
   }
+
+  sendMessage(path, message) {
+    this.stompClient.send(path, {}, message);
+  }
+
 
   onLongPress() {
     this._bottomSheet.open(ScenesDetailsComponent, {
