@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  serverURL: 'http://192.168.0.16:9999',
-  // serverURL: 'http://192.168.2.116:9999'
+  // serverURL: 'http://192.168.0.16:9999',
+  serverURL: 'http://192.168.2.166:9999'
 };
 
 /*

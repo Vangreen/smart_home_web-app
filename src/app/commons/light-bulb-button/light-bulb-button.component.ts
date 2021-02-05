@@ -1,12 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {MatBottomSheet} from "@angular/material/bottom-sheet";
-import {ColorPickerComponent} from "../color-picker/color-picker.component"
-import {FirstScreenComponent} from "../../first-screen/first-screen.component";
-import {environment} from '../../../environments/environment';
-
-declare var SockJS;
-declare var Stomp;
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
+import {ColorPickerComponent} from '../color-picker/color-picker.component';
+import {FirstScreenComponent} from '../../first-screen/first-screen.component';
+import {WebsocketService} from '../../service/websocket.service';
 
 @Component({
   selector: 'app-light-bulb-button',
@@ -15,7 +12,12 @@ declare var Stomp;
 })
 export class LightBulbButtonComponent implements OnInit {
 
-  constructor(private router: Router, private _bottomSheet: MatBottomSheet, private firstScreen: FirstScreenComponent) {
+  constructor(
+    private router: Router,
+    private _bottomSheet: MatBottomSheet,
+    private firstScreen: FirstScreenComponent,
+    private webSocket: WebsocketService
+  ) {
   }
 
   public stompClient;
@@ -32,64 +34,50 @@ export class LightBulbButtonComponent implements OnInit {
     if (this.status === 'Off') {
       this.toggleButton();
     }
-    this.initializeWebSocketConnection();
+    this.webSocket.subscribe('/device/device/' + this.serial, this.connect_callback);
   }
 
-  initializeWebSocketConnection() {
-    const serverUrl = environment.serverURL + '/mywebsocket';
-    const ws = new SockJS(serverUrl);
-    this.stompClient = Stomp.over(ws);
-    const that = this;
-    this.stompClient.connect({}, function (frame) {
-      that.stompClient.subscribe('/device/device/' + that.serial, (message) => {
-        if (message.body) {
-          that.msg.push(message.body);
-          const config = JSON.parse(message.body);
-          if (config.task === 'status change' && config.status !== that.status) {
-            that.toggleButton();
-          } else if (config.task === 'color change') {
-            that.hsv = [config.hue, config.saturation, config.brightness];
-          } else if (config.hue !== undefined) {                                  // temp
-            if (config.deviceStatus === 'On' && !that.toggle) {
-              that.toggleButton();
-            } else if (config.deviceStatus === 'Off' && that.toggle) {
-              that.toggleButton();
-            }
-            that.hsv = [config.hue, config.saturation, config.brightness];
-          }
-        }
-      });
-    });
-  }
+  connect_callback = (message) => {
+    this.msg.push(message.body);
+    const config = JSON.parse(message.body);
+    if (config.task === 'status change' && config.status !== this.status) {
+      this.toggleButton();
+    } else if (config.task === 'color change') {
+      this.hsv = [config.hue, config.saturation, config.brightness];
+    } else if (config.hue !== undefined) {                                  // temp
+      if (config.deviceStatus === 'On' && !this.toggle) {
+        this.toggleButton();
+      } else if (config.deviceStatus === 'Off' && this.toggle) {
+        this.toggleButton();
+      }
+      this.hsv = [config.hue, config.saturation, config.brightness];
+    }
+  };
 
-  sendMessage(path, message) {
-    this.stompClient.send(path, {}, message);
-  }
-
-  toggleButton() {
+  toggleButton(): void {
     this.toggle = !this.toggle;
     this.status = this.toggle ? 'On' : 'Off';
     this.img = this.toggle ? 'assets/svg/lights/light_on.svg' : 'assets/svg/lights/light_off.svg';
   }
 
-  getStatus() {
+  getStatus(): string {
     return this.status;
   }
 
-  enableDisableRule() {
+  enableDisableRule(): void {
     this.toggleButton();
     const message = {
       status: this.status
     };
-    this.sendMessage('/device/changeDeviceStatus/' + this.serial, JSON.stringify(message));
+    this.webSocket.sendMessage('/device/changeDeviceStatus/' + this.serial, JSON.stringify(message));
   }
 
-  onLongPress() {
+  onLongPress(): void {
     const bottomSheet = this._bottomSheet.open(ColorPickerComponent, {
       data: {status: this.status, hsv: this.hsv, serial: this.serial}
     });
     bottomSheet.afterDismissed().subscribe(data =>
       this.firstScreen.apiHandler()
-    )
+    );
   }
 }
