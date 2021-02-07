@@ -33,19 +33,23 @@ export class LightBulbButtonComponent implements OnInit, OnDestroy {
   private unsubscribeSubject: Subject<void> = new Subject<void>();
 
   ngOnInit(): void {
-    if (this.status === 'Off') {
-      this.toggleButton();
+    if (this.serial !== undefined){
+      if (this.status === 'Off') {
+        this.toggleButton();
+      }
+      this.deviceService
+        .deviceConf(this.serial)
+        .pipe(map(deviceConfig => this.connect_callback(deviceConfig)), takeUntil(this.unsubscribeSubject))
+        .subscribe();
     }
-    this.deviceService
-      .deviceConf(this.serial)
-      .pipe(map(deviceConfig => this.connect_callback(deviceConfig)), takeUntil(this.unsubscribeSubject))
-      .subscribe();
   }
 
   ngOnDestroy(){
     console.log('destroyed');
-    this.unsubscribeSubject.next();
-    this.unsubscribeSubject.complete();
+    if (this.serial !== undefined) {
+      this.unsubscribeSubject.next();
+      this.unsubscribeSubject.complete();
+    }
   }
 
 
@@ -81,18 +85,23 @@ export class LightBulbButtonComponent implements OnInit, OnDestroy {
 
   enableDisableRule(): void {
     this.toggleButton();
-    const message = {
-      status: this.status
-    };
-    this.deviceService.changeDeviceStatus(this.serial, message);
+    if (this.serial !== undefined) {
+      const message = {
+        status: this.status
+      };
+      this.deviceService.changeDeviceStatus(this.serial, message);
+    }
   }
 
   onLongPress(): void {
-    const bottomSheet = this._bottomSheet.open(ColorPickerComponent, {
-      data: {status: this.status, hsv: this.hsv, serial: this.serial}
-    });
-    bottomSheet.afterDismissed().subscribe(data =>
-      this.firstScreen.apiHandler()
-    );
+    if (this.serial !== undefined) {
+
+      const bottomSheet = this._bottomSheet.open(ColorPickerComponent, {
+        data: {status: this.status, hsv: this.hsv, serial: this.serial}
+      });
+      bottomSheet.afterDismissed().subscribe(data =>
+        this.firstScreen.apiHandler()
+      );
+    }
   }
 }
