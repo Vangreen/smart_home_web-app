@@ -1,9 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
-// import {ColorPickerComponent} from "../color-picker/color-picker.component"
 import {ScenesDetailsComponent} from '../scenes-details/scenes-details.component';
-import {environment} from "../../../environments/environment";
 
 declare var SockJS;
 declare var Stomp;
