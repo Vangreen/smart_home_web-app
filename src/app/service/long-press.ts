@@ -48,7 +48,7 @@ export class LongPress {
       this.longPressing = false;
       this.pressing = false;
       //TODO Fix this, cause console log error
-      this.touch.destroy();
+
     }
   }
 }

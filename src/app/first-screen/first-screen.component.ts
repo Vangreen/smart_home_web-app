@@ -1,11 +1,11 @@
 import {Component, Injectable, OnInit} from '@angular/core';
-import {BottomSheetComponent} from "../commons/bottom-sheet/bottom-sheet.component";
-import {MatBottomSheet} from "@angular/material/bottom-sheet";
-import { ApiService } from '../service/api.service';
+import {BottomSheetComponent} from '../commons/bottom-sheet/bottom-sheet.component';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
+import {ApiService} from '../service/api.service';
 import {DeviceConfiguration} from '../models/DeviceConfiguration';
 import {MatDialog} from '@angular/material/dialog';
-import {SceneDialogComponent} from "../commons/scene-dialog/scene-dialog.component";
-import {AccesoryDialogComponent} from "../commons/accesory-dialog/accesory-dialog.component";
+import {SceneDialogComponent} from '../commons/scene-dialog/scene-dialog.component';
+import {AccesoryDialogComponent} from '../commons/accesory-dialog/accesory-dialog.component';
 
 @Component({
   selector: 'app-first-screen',
@@ -18,11 +18,15 @@ import {AccesoryDialogComponent} from "../commons/accesory-dialog/accesory-dialo
 export class FirstScreenComponent implements OnInit {
 
   room: string;
-  biurko = 'ws://192.168.0.25:81';
   Buttons: Array<DeviceConfiguration>;
-  constructor(private _bottomSheet: MatBottomSheet, private apiService: ApiService, public dialog: MatDialog) {
-    this.room = 'Salon';
-  this.apiHandler();
+
+  constructor(
+    private _bottomSheet: MatBottomSheet,
+    private apiService: ApiService,
+    public dialog: MatDialog,
+  ) {
+      this.room = 'Salon';
+      this.apiHandler();
   }
 
   ngOnInit(): void {
@@ -47,18 +51,18 @@ export class FirstScreenComponent implements OnInit {
     // opens the dialog won't be in the DOM any more when the dialog closes.
     // dialogRef.afterClosed().subscribe(() => this.menuTrigger.focus());
 
-}
+  }
 
-openAccessoryDialog() {
+  openAccessoryDialog() {
     const dialogRef = this.dialog.open(AccesoryDialogComponent, {restoreFocus: false});
-    dialogRef.afterClosed().subscribe( data=>
+    dialogRef.afterClosed().subscribe(data =>
       this.apiHandler()
-    )
+    );
     // Manually restore focus to the menu trigger since the element that
     // opens the dialog won't be in the DOM any more when the dialog closes.
     // dialogRef.afterClosed().subscribe(() => this.menuTrigger.focus());
 
-}
+  }
 
 
   openBottomSheet(): void {

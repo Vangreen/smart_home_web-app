@@ -3,7 +3,9 @@ import {ApiService} from '../../service/api.service';
 import {UnassignedDevice} from '../../models/UnassignedDevice';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SnackbarService} from '../snack-bar/snackbar.service';
-import {WebsocketService} from '../../service/websocket.service';
+import {DeviceService} from '../../service/device.service';
+import {map, takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 
 
 
@@ -20,18 +22,22 @@ export class AccesoryDialogComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   isEditable = true;
+  private unsubscribeSubject: Subject<void> = new Subject<void>();
 
   constructor(
     private apiService: ApiService,
     private _formBuilder: FormBuilder,
     private snackBarService: SnackbarService,
-    private webSocket: WebsocketService
+    private deviceService: DeviceService
   ) {
     this.src = 'assets/svg/lights/light_on.svg';
   }
 
   ngOnInit(): void {
-    this.webSocket.subscribe('/device/unassignedDevices', this.connect_callback);
+    this.deviceService
+      .unassignedDevicesConfig()
+      .pipe(map(unassignedDevice => this.connect_callback(unassignedDevice)), takeUntil(this.unsubscribeSubject))
+      .subscribe();
     this.firstFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required]
     });
@@ -39,13 +45,14 @@ export class AccesoryDialogComponent implements OnInit {
       secondCtrl: ['', Validators.required]
     });
   }
-  
+
   ngOnDestroy(): void {
-    this.webSocket.unsubscribe();
+    this.unsubscribeSubject.next();
+    this.unsubscribeSubject.complete();
   }
 
-  connect_callback = (message) => {
-    this.Buttons = JSON.parse(message.body);
+  connect_callback(message){
+      this.Buttons = message;
   }
 
   onOkClick(device: UnassignedDevice): void {
