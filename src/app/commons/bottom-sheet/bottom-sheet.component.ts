@@ -11,7 +11,7 @@ import {FirstScreenComponent} from "../../first-screen/first-screen.component";
 })
 export class BottomSheetComponent implements OnInit {
 
-  rooms: string[] = ['Salon', 'Kuchnia', 'Sypialnia'];
+  rooms: string[] = ['pawla', 'Kuchnia', 'Sypialnia'];
 
 
   constructor(private firstScreen: FirstScreenComponent) {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import set = Reflect.set;
 
@@ -10,8 +10,9 @@ export class ApiService {
 
   constructor(private httpClient: HttpClient) {
   }
-  public getDevices(){
-    return this.httpClient.get(environment.serverURL + `/getDevices`);
+  public getDevices(room: string){
+    const params = new HttpParams().set('room', room);
+    return this.httpClient.get(environment.serverURL + `/getDevices`, {params});
   }
 
   public addDevice(setSerial: number, deviceType: string, setName: string, setRoom: string){

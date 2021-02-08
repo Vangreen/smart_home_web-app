@@ -25,7 +25,7 @@ export class FirstScreenComponent implements OnInit {
     private apiService: ApiService,
     public dialog: MatDialog,
   ) {
-      this.room = 'Salon';
+      this.room = 'pawla';
       this.apiHandler();
   }
 
@@ -34,7 +34,7 @@ export class FirstScreenComponent implements OnInit {
   }
 
   public apiHandler() {
-    this.apiService.getDevices().subscribe((data: Array<DeviceConfiguration>) => {
+    this.apiService.getDevices(this.room).subscribe((data: Array<DeviceConfiguration>) => {
       console.log(data);
       this.Buttons = data;
     });
@@ -70,6 +70,7 @@ export class FirstScreenComponent implements OnInit {
     bottomSheetRef.afterDismissed().subscribe((dataFromChild) => {
       if (dataFromChild != null) {
         this.room = dataFromChild;
+        this.apiHandler();
       }
     });
   }
