@@ -1,5 +1,13 @@
+<button mat-button>
+  <mat-icon class="build-icon">build</mat-icon>
+  Ustawienia zaawansowane</button>
 <mat-selection-list  [multiple]="false">
   <mat-list-option *ngFor="let room of rooms" [value]="room" (click)="setRoom(room)">
     {{room}}
+  </mat-list-option>
+  <mat-divider></mat-divider>
+  <mat-list-option (click)="openAddRoomDialog()">
+    <mat-icon mat-list-icon>add</mat-icon>
+    Dodaj pokój
   </mat-list-option>
 </mat-selection-list>

@@ -21,20 +21,22 @@ import {LoginScreenComponent} from './login-screen/login-screen.component';
 import {ContainerComponent} from './container/container.component';
 import {BottomSheetComponent} from './commons/bottom-sheet/bottom-sheet.component';
 import {LongPress} from './service/long-press';
-import { HttpClientModule } from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 import {ColorSketchModule} from 'ngx-color/sketch';
 import {ColorPickerComponent} from './commons/color-picker/color-picker.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {ColorCircleModule} from 'ngx-color/circle';
 import {MatMenuModule} from '@angular/material/menu';
-import { ScenesButtonComponent } from './commons/scenes-button/scenes-button.component';
-import { ScenesDetailsComponent } from './commons/scenes-details/scenes-details.component';
-import { SceneDialogComponent } from './commons/scene-dialog/scene-dialog.component';
+import {ScenesButtonComponent} from './commons/scenes-button/scenes-button.component';
+import {ScenesDetailsComponent} from './commons/scenes-details/scenes-details.component';
+import {SceneDialogComponent} from './commons/scene-dialog/scene-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
-import { AccesoryDialogComponent } from './commons/accesory-dialog/accesory-dialog.component';
+import {AccesoryDialogComponent} from './commons/accesory-dialog/accesory-dialog.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {AddRoomDialogComponent} from './add-room-dialog/add-room-dialog.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -52,6 +54,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     ScenesDetailsComponent,
     SceneDialogComponent,
     AccesoryDialogComponent,
+    AddRoomDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,7 +78,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     FormsModule,
     MatStepperModule,
     ReactiveFormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]
