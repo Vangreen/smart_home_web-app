@@ -24,6 +24,7 @@ export class FirstScreenComponent implements OnInit {
     private _bottomSheet: MatBottomSheet,
     private apiService: ApiService,
     public dialog: MatDialog,
+    private roomService: RoomService
   ) {
       this.room = 'pawla';
       this.apiHandler();
