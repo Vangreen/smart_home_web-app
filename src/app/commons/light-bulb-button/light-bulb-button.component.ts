@@ -1,24 +1,27 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {MatBottomSheet} from "@angular/material/bottom-sheet";
-import {ColorPickerComponent} from "../color-picker/color-picker.component"
-import {FirstScreenComponent} from "../../first-screen/first-screen.component";
-import {environment} from '../../../environments/environment';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
+import {ColorPickerComponent} from '../color-picker/color-picker.component';
+import {FirstScreenComponent} from '../../first-screen/first-screen.component';
+import {DeviceService} from '../../service/device.service';
+import {Subject} from 'rxjs';
+import {map, takeUntil} from 'rxjs/operators';
 
-declare var SockJS;
-declare var Stomp;
 
 @Component({
   selector: 'app-light-bulb-button',
   templateUrl: './light-bulb-button.component.html',
   styleUrls: ['./light-bulb-button.component.css']
 })
-export class LightBulbButtonComponent implements OnInit {
+export class LightBulbButtonComponent implements OnInit, OnDestroy {
 
-  constructor(private router: Router, private _bottomSheet: MatBottomSheet, private firstScreen: FirstScreenComponent) {
+  constructor(
+    private router: Router,
+    private _bottomSheet: MatBottomSheet,
+    private firstScreen: FirstScreenComponent,
+    private deviceService: DeviceService
+  ) {
   }
-
-  public stompClient;
   public msg = [];
   @Input() serial: number;
   @Input() name: string;
@@ -27,69 +30,69 @@ export class LightBulbButtonComponent implements OnInit {
   toggle = true;
   img = 'assets/svg/lights/light_on.svg';
   disableClick = false;
+  private unsubscribeSubject: Subject<void> = new Subject<void>();
 
   ngOnInit(): void {
     if (this.status === 'Off') {
       this.toggleButton();
     }
-    this.initializeWebSocketConnection();
+    this.deviceService
+      .deviceConf(this.serial)
+      .pipe(map(deviceConfig => this.connect_callback(deviceConfig)), takeUntil(this.unsubscribeSubject))
+      .subscribe();
   }
 
-  initializeWebSocketConnection() {
-    const serverUrl = environment.serverURL + '/mywebsocket';
-    const ws = new SockJS(serverUrl);
-    this.stompClient = Stomp.over(ws);
-    const that = this;
-    this.stompClient.connect({}, function (frame) {
-      that.stompClient.subscribe('/device/device/' + that.serial, (message) => {
-        if (message.body) {
-          that.msg.push(message.body);
-          const config = JSON.parse(message.body);
-          if (config.task === 'status change' && config.status !== that.status) {
-            that.toggleButton();
-          } else if (config.task === 'color change') {
-            that.hsv = [config.hue, config.saturation, config.brightness];
-          } else if (config.hue !== undefined) {                                  // temp
-            if (config.deviceStatus === 'On' && !that.toggle) {
-              that.toggleButton();
-            } else if (config.deviceStatus === 'Off' && that.toggle) {
-              that.toggleButton();
-            }
-            that.hsv = [config.hue, config.saturation, config.brightness];
-          }
+  ngOnDestroy(){
+    console.log('destroyed');
+    this.unsubscribeSubject.next();
+    this.unsubscribeSubject.complete();
+  }
+
+
+  connect_callback(message) {
+    console.log(message);
+    if (message){
+      this.msg.push(message);
+      if (message.task === 'status change' && message.status !== this.status) {
+        this.toggleButton();
+      } else if (message.task === 'color change') {
+        this.hsv = [message.hue, message.saturation, message.brightness];
+      } else if (message.hue !== undefined) {                                  // temp
+        if (message.deviceStatus === 'On' && !this.toggle) {
+          this.toggleButton();
+        } else if (message.deviceStatus === 'Off' && this.toggle) {
+          this.toggleButton();
         }
-      });
-    });
-  }
+        this.hsv = [message.hue, message.saturation, message.brightness];
+      }
+    }
 
-  sendMessage(path, message) {
-    this.stompClient.send(path, {}, message);
-  }
+  };
 
-  toggleButton() {
+  toggleButton(): void {
     this.toggle = !this.toggle;
     this.status = this.toggle ? 'On' : 'Off';
     this.img = this.toggle ? 'assets/svg/lights/light_on.svg' : 'assets/svg/lights/light_off.svg';
   }
 
-  getStatus() {
+  getStatus(): string {
     return this.status;
   }
 
-  enableDisableRule() {
+  enableDisableRule(): void {
     this.toggleButton();
     const message = {
       status: this.status
     };
-    this.sendMessage('/device/changeDeviceStatus/' + this.serial, JSON.stringify(message));
+    this.deviceService.changeDeviceStatus(this.serial, message);
   }
 
-  onLongPress() {
+  onLongPress(): void {
     const bottomSheet = this._bottomSheet.open(ColorPickerComponent, {
       data: {status: this.status, hsv: this.hsv, serial: this.serial}
     });
     bottomSheet.afterDismissed().subscribe(data =>
       this.firstScreen.apiHandler()
-    )
+    );
   }
 }

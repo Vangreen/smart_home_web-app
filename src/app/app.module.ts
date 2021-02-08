@@ -25,16 +25,16 @@ import { HttpClientModule } from '@angular/common/http';
 import {ColorSketchModule} from 'ngx-color/sketch';
 import {ColorPickerComponent} from './commons/color-picker/color-picker.component';
 import {MatTabsModule} from '@angular/material/tabs';
-import {ColorCircleModule} from "ngx-color/circle";
+import {ColorCircleModule} from 'ngx-color/circle';
 import {MatMenuModule} from '@angular/material/menu';
 import { ScenesButtonComponent } from './commons/scenes-button/scenes-button.component';
 import { ScenesDetailsComponent } from './commons/scenes-details/scenes-details.component';
 import { SceneDialogComponent } from './commons/scene-dialog/scene-dialog.component';
-import {MatDialogModule} from "@angular/material/dialog";
+import {MatDialogModule} from '@angular/material/dialog';
 import { AccesoryDialogComponent } from './commons/accesory-dialog/accesory-dialog.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatStepperModule} from '@angular/material/stepper';
-import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({

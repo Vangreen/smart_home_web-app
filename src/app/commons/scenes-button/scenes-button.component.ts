@@ -1,9 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
-// import {ColorPickerComponent} from "../color-picker/color-picker.component"
 import {ScenesDetailsComponent} from '../scenes-details/scenes-details.component';
-import {environment} from "../../../environments/environment";
 
 declare var SockJS;
 declare var Stomp;
@@ -34,52 +32,52 @@ export class ScenesButtonComponent implements OnInit {
   ngOnInit(): void {
     console.log('HUEEEEEEEE');
     this.img = 'assets/svg/scenes/' + this.imgName;
-    const serverUrl = environment.serverURL + '/mywebsocket';
-    const ws = new SockJS(serverUrl);
-    this.stompClient = Stomp.over(ws);
-    const that = this;
-    this.stompClient.connect({}, function (frame) {
-      that.stompClient.subscribe('/device/device/' + that.serial, (message) => {
-        if (message.body) {
-          that.msg.push(message.body);
-          const config = JSON.parse(message.body);
-          if (config.task === 'state change' || config.response === 'connected') {
-            this.connectionStatus = '';
-            if (config.state === 'On' && this.arrayEquals(this.hsv, [config.hue, config.saturation, config.brightness])) {
-              console.log('on');
-              // this.toggleButton();
-              this.toggle = true;
-            } else if (config.state === 'Off') {
-              console.log('off');
-              // this.toggleButton();
-              this.toggle = false;
-            } else if (!this.arrayEquals(this.hsv, [config.hue, config.saturation, config.brightness])) {
-              console.log('off');
-              // this.toggleButton();
-              this.toggle = false;
-            }
-          } else if (config.task === 'color change') {
-            console.log('ALFAAAAA');
-
-            if (config.state === 'On' && this.arrayEquals(this.hsv, [config.hue, config.saturation, config.brightness])) {
-              console.log('on -color');
-              console.log(this.arrayEquals(this.hsv, [config.hue, config.saturation, config.brightness]));
-              // this.toggleButton();
-              this.toggle = true;
-            } else if (config.state === 'Off') {
-              console.log('off');
-              // this.toggleButton();
-              this.toggle = false;
-            } else if (!this.arrayEquals(this.hsv, [config.hue, config.saturation, config.brightness])) {
-              console.log('off');
-              // this.toggleButton();
-              this.toggle = false;
-            }
-            // this.hsv = [msg.hue, msg.saturation, msg.brightness];
-          }
-        }
-      });
-    });
+    // const serverUrl = environment.serverURL + '/mywebsocket';
+    // const ws = new SockJS(serverUrl);
+    // this.stompClient = Stomp.over(ws);
+    // const that = this;
+    // this.stompClient.connect({}, function (frame) {
+    //   that.stompClient.subscribe('/device/device/' + that.serial, (message) => {
+    //     if (message.body) {
+    //       that.msg.push(message.body);
+    //       const config = JSON.parse(message.body);
+    //       if (config.task === 'state change' || config.response === 'connected') {
+    //         this.connectionStatus = '';
+    //         if (config.state === 'On' && this.arrayEquals(this.hsv, [config.hue, config.saturation, config.brightness])) {
+    //           console.log('on');
+    //           // this.toggleButton();
+    //           this.toggle = true;
+    //         } else if (config.state === 'Off') {
+    //           console.log('off');
+    //           // this.toggleButton();
+    //           this.toggle = false;
+    //         } else if (!this.arrayEquals(this.hsv, [config.hue, config.saturation, config.brightness])) {
+    //           console.log('off');
+    //           // this.toggleButton();
+    //           this.toggle = false;
+    //         }
+    //       } else if (config.task === 'color change') {
+    //         console.log('ALFAAAAA');
+    //
+    //         if (config.state === 'On' && this.arrayEquals(this.hsv, [config.hue, config.saturation, config.brightness])) {
+    //           console.log('on -color');
+    //           console.log(this.arrayEquals(this.hsv, [config.hue, config.saturation, config.brightness]));
+    //           // this.toggleButton();
+    //           this.toggle = true;
+    //         } else if (config.state === 'Off') {
+    //           console.log('off');
+    //           // this.toggleButton();
+    //           this.toggle = false;
+    //         } else if (!this.arrayEquals(this.hsv, [config.hue, config.saturation, config.brightness])) {
+    //           console.log('off');
+    //           // this.toggleButton();
+    //           this.toggle = false;
+    //         }
+    //         // this.hsv = [msg.hue, msg.saturation, msg.brightness];
+    //       }
+    //     }
+    //   });
+    // });
   }
 
   arrayEquals(a, b) {
