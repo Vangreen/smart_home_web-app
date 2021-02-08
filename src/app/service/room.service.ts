@@ -13,13 +13,21 @@ export class RoomService {
   constructor(private httpClient: HttpClient,
               private websocket: WebsocketService) { }
 
-  public addRoom(roomName: string, main: string){
+  public addRoom(roomNamel: string, mainl: string){
     const message = {
-      roomName: roomName,
-      main: main
+      roomName: roomNamel,
+      main: mainl
     };
-    return this.httpClient.post(environment.serverURL + `/addRoom`, message);
+    return this.httpClient.post(environment.serverURL + `/addRoom`, message).subscribe(data => console.log(data));
   }
+
+  public deleteRoom(roomID: number){
+    const message = {
+      id: roomID,
+    };
+    return this.httpClient.post(environment.serverURL + `/deleteRoom`, message).subscribe(data => console.log(data));
+  }
+
 
   roomConf(): Observable<any>{
     return this.websocket

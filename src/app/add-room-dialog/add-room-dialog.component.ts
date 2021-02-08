@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, Validators} from "@angular/forms";
-import {MatBottomSheet} from "@angular/material/bottom-sheet";
-import {DeviceService} from '../service/device.service';
+import {FormControl, Validators} from '@angular/forms';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {RoomService} from '../service/room.service';
 
 @Component({
@@ -26,6 +25,7 @@ export class AddRoomDialogComponent implements OnInit {
   }
 
   onAddButtonClick() {
+    console.log('clicked');
     this.checked === false ? this.main = 'no' : this.main = 'yes';
     this.roomService.addRoom(this.roomName, this.main);
   }

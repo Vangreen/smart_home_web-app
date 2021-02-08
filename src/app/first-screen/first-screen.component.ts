@@ -6,6 +6,9 @@ import {DeviceConfiguration} from '../models/DeviceConfiguration';
 import {MatDialog} from '@angular/material/dialog';
 import {SceneDialogComponent} from '../commons/scene-dialog/scene-dialog.component';
 import {AccesoryDialogComponent} from '../commons/accesory-dialog/accesory-dialog.component';
+import {RoomService} from '../service/room.service';
+import {map} from 'rxjs/operators';
+import {RoomConfiguration} from '../models/RoomConfiguration';
 
 @Component({
   selector: 'app-first-screen',
@@ -19,6 +22,7 @@ export class FirstScreenComponent implements OnInit {
 
   room: string;
   Buttons: Array<DeviceConfiguration>;
+  roomsList: Array<RoomConfiguration>;
 
   constructor(
     private _bottomSheet: MatBottomSheet,
@@ -26,12 +30,23 @@ export class FirstScreenComponent implements OnInit {
     public dialog: MatDialog,
     private roomService: RoomService
   ) {
-      this.room = 'pawla';
-      this.apiHandler();
+      this.room = null;
   }
 
   ngOnInit(): void {
+    this.roomService
+      .roomConf()
+      .pipe(map(roomConf => this.roomsListChange(roomConf)))
+      .subscribe();
+  }
 
+  roomsListChange(roomsList: Array<RoomConfiguration>){
+    this.roomsList = roomsList;
+    if(this.room === null){
+      const main = roomsList.find(ele => ele.main === 'yes');
+      this.room = main.roomName;
+      this.apiHandler();
+    }
   }
 
   public apiHandler() {
@@ -67,7 +82,9 @@ export class FirstScreenComponent implements OnInit {
 
 
   openBottomSheet(): void {
-    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent);
+    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
+      data: {roomsList: this.roomsList}
+    });
     bottomSheetRef.afterDismissed().subscribe((dataFromChild) => {
       if (dataFromChild != null) {
         this.room = dataFromChild;
