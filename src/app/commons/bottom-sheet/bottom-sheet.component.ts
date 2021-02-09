@@ -1,4 +1,4 @@
-import {Component, Inject, Injectable, OnInit, Output} from '@angular/core';
+import {Component, Inject, Injectable, OnInit} from '@angular/core';
 import {FirstScreenComponent} from '../../first-screen/first-screen.component';
 import {MatDialog} from '@angular/material/dialog';
 import {AddRoomDialogComponent} from '../../add-room-dialog/add-room-dialog.component';
@@ -28,6 +28,7 @@ export class BottomSheetComponent implements OnInit {
     private _bottomSheet: MatBottomSheet,
     private roomService: RoomService) {
   }
+
   rooms = this.data.roomsList;
 
 
@@ -35,19 +36,18 @@ export class BottomSheetComponent implements OnInit {
   }
 
   setRoom(value: string): void {
+    console.log("click")
     this.firstScreen.setRoom(value);
   }
 
   openAddRoomDialog() {
     this.dialog.open(AddRoomDialogComponent, {restoreFocus: false});
+    this.firstScreen.closeBottomSheet();
   }
 
-  deleteRoom(id: number){
+  deleteRoom(id: number) {
     this.roomService.deleteRoom(id);
-  }
-
-  closeBottomSheet(){
-    this._bottomSheet.dismiss();
+    this.firstScreen.closeBottomSheet();
   }
 
 }

@@ -1,15 +1,23 @@
-<button mat-button>
-  <mat-icon class="build-icon">build</mat-icon>
-  Ustawienia zaawansowane</button>
+
 <mat-selection-list  [multiple]="false">
-  <mat-list-option *ngFor="let room of rooms" [value]="room" (click)="setRoom(room.roomName)">
+  <div mat-subheader>Pokoje</div>
+  <mat-list-option *ngFor="let room of rooms" [value]="room" >
+    <div (click)="setRoom(room.roomName)">
     {{room.roomName}}
-    <button mat-button mat-dialog-close (click)="deleteRoom(room.id)">Delete
-    </button>
+    </div>
+      <mat-icon mat-list-icon>meeting_room</mat-icon>
   </mat-list-option>
   <mat-divider></mat-divider>
+  <div mat-subheader>Opcje</div>
   <mat-list-option (click)="openAddRoomDialog()">
     <mat-icon mat-list-icon>add</mat-icon>
     Dodaj pokój
   </mat-list-option>
+  <mat-list-option >
+    <mat-icon mat-list-icon>build</mat-icon>
+    Ustawienia zaawansowane
+  </mat-list-option>
+
 </mat-selection-list>
+
+

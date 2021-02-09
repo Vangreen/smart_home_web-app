@@ -60,6 +60,11 @@ export class FirstScreenComponent implements OnInit {
     this._bottomSheet.dismiss(value);
   }
 
+  closeBottomSheet(): void {
+    this._bottomSheet.dismiss();
+  }
+
+
   openSceneDialog() {
     const dialogRef = this.dialog.open(SceneDialogComponent, {restoreFocus: false});
 
