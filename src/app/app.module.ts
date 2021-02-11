@@ -37,6 +37,8 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {AddRoomDialogComponent} from './add-room-dialog/add-room-dialog.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { AdvancedOptionRoomDialogComponent } from './commons/advanced-option-room-dialog/advanced-option-room-dialog.component';
+import {MatTableModule} from "@angular/material/table";
 
 
 @NgModule({
@@ -55,6 +57,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     SceneDialogComponent,
     AccesoryDialogComponent,
     AddRoomDialogComponent,
+    AdvancedOptionRoomDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,7 +82,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatStepperModule,
     ReactiveFormsModule,
     MatSnackBarModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
