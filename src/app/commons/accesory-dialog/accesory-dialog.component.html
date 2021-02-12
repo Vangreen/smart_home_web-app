@@ -29,9 +29,10 @@
           </mat-form-field>
         </div>
         <mat-form-field>
-          <mat-label>Room</mat-label>
-          <input matInput formControlName="secondCtrl" [(ngModel)]="room"
-                 required>
+          <mat-label>Choose Room</mat-label>
+          <mat-select formControlName="thirdFormGroup" [(ngModel)]="selectedRoom">
+            <mat-option *ngFor="let room of roomsList" [value]="room">{{room.roomName}}</mat-option>
+          </mat-select>
         </mat-form-field>
         <div>
           <button mat-button matStepperPrevious>Back</button>

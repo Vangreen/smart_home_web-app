@@ -5,7 +5,7 @@ import {AddRoomDialogComponent} from '../../add-room-dialog/add-room-dialog.comp
 import {MAT_BOTTOM_SHEET_DATA, MatBottomSheet} from '@angular/material/bottom-sheet';
 import {RoomConfiguration} from '../../models/RoomConfiguration';
 import {RoomService} from '../../service/room.service';
-import {AdvancedOptionRoomDialogComponent} from "../advanced-option-room-dialog/advanced-option-room-dialog.component";
+import {AdvancedOptionRoomDialogComponent} from '../advanced-option-room-dialog/advanced-option-room-dialog.component';
 
 export interface DialogData {
   roomsList: Array<RoomConfiguration>;
@@ -26,8 +26,7 @@ export class BottomSheetComponent implements OnInit {
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: DialogData,
     private firstScreen: FirstScreenComponent,
     public dialog: MatDialog,
-    private _bottomSheet: MatBottomSheet,
-    private roomService: RoomService) {
+    private _bottomSheet: MatBottomSheet) {
   }
 
   rooms = this.data.roomsList;
@@ -36,9 +35,9 @@ export class BottomSheetComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  setRoom(value: string): void {
-    console.log("click")
-    this.firstScreen.setRoom(value);
+  setRoom(room: RoomConfiguration): void {
+    console.log("click");
+    this.firstScreen.setRoom(room);
   }
 
   openAddRoomDialog() {
@@ -48,11 +47,6 @@ export class BottomSheetComponent implements OnInit {
 
   openAdvancedOptionsDialog() {
     this.dialog.open(AdvancedOptionRoomDialogComponent, {data: {roomsList: this.rooms}});
-    this.firstScreen.closeBottomSheet();
-  }
-
-  deleteRoom(id: number) {
-    this.roomService.deleteRoom(id);
     this.firstScreen.closeBottomSheet();
   }
 

@@ -25,7 +25,7 @@
   </mat-menu>
 
   <div class="room-name-container">
-    <p class="room-name">{{room}}</p>
+    <p class="room-name" *ngIf="room!= null">{{room.roomName}}</p>
   </div>
   <p class="category">Scenerie</p>
   <div class="grid-container scenes">

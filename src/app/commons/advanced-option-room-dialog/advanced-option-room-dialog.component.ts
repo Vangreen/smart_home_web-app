@@ -35,7 +35,7 @@ export class AdvancedOptionRoomDialogComponent implements OnInit {
   }
 
   renameRoom(id: number, name: string){
-    this.roomService.renameRoom(id,name);
+    this.roomService.renameRoom(id, name);
   }
 
 }

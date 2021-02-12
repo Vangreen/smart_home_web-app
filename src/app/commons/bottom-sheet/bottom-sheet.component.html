@@ -1,8 +1,8 @@
 
 <mat-selection-list  [multiple]="false">
   <div mat-subheader>Pokoje</div>
-  <mat-list-option *ngFor="let room of rooms" [value]="room" >
-    <div (click)="setRoom(room.roomName)">
+  <mat-list-option *ngFor="let room of rooms" [value]="room" (click)="setRoom(room)">
+    <div >
     {{room.roomName}}
     </div>
       <mat-icon mat-list-icon>meeting_room</mat-icon>

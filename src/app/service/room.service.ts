@@ -22,10 +22,10 @@ export class RoomService {
   }
 
   public deleteRoom(roomID: number){
-    return this.httpClient.delete(environment.serverURL + `/deleteRoom/`+roomID).subscribe(data => console.log(data));
+    return this.httpClient.delete(environment.serverURL + `/deleteRoom/` + roomID).subscribe(data => console.log(data));
   }
 
-  public renameRoom(roomID:number, name: string){
+  public renameRoom(roomID: number, name: string){
     const message = {
       id: roomID,
       name:name

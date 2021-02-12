@@ -20,7 +20,7 @@ import {RoomConfiguration} from '../models/RoomConfiguration';
 })
 export class FirstScreenComponent implements OnInit {
 
-  room: string;
+  room: RoomConfiguration;
   Buttons: Array<DeviceConfiguration>;
   roomsList: Array<RoomConfiguration>;
 
@@ -42,22 +42,34 @@ export class FirstScreenComponent implements OnInit {
 
   roomsListChange(roomsList: Array<RoomConfiguration>){
     this.roomsList = roomsList;
-    if(this.room === null){
+    // if (Object.keys(this.room).length === 0){
+    if (this.room == null){
       const main = roomsList.find(ele => ele.main === 'yes');
-      this.room = main.roomName;
+      if (main !== undefined){
+        this.room = main;
+      }else if (Object.keys(roomsList).length !== 0){
+        this.room = roomsList[0];
+      }
       this.apiHandler();
+    }else{
+      const newChosen = roomsList.find(ele => ele.id === this.room.id);
+      if (newChosen.roomName !== this.room.roomName){
+        this.room = newChosen;
+      }
     }
+
   }
 
   public apiHandler() {
-    this.apiService.getDevices(this.room).subscribe((data: Array<DeviceConfiguration>) => {
-      console.log(data);
-      this.Buttons = data;
-    });
+    if(this.room != null){
+      this.apiService.getDevices(this.room.id).subscribe((data: Array<DeviceConfiguration>) => {
+        this.Buttons = data;
+      });
+    }
   }
 
-  setRoom(value: string): void {
-    this._bottomSheet.dismiss(value);
+  setRoom(room: RoomConfiguration): void {
+    this._bottomSheet.dismiss(room);
   }
 
   closeBottomSheet(): void {
@@ -75,7 +87,7 @@ export class FirstScreenComponent implements OnInit {
   }
 
   openAccessoryDialog() {
-    const dialogRef = this.dialog.open(AccesoryDialogComponent, {restoreFocus: false});
+    const dialogRef = this.dialog.open(AccesoryDialogComponent, {restoreFocus: false, data: {roomsList: this.roomsList}});
     dialogRef.afterClosed().subscribe(data =>
       this.apiHandler()
     );
