@@ -28,7 +28,7 @@ export class RoomService {
   public renameRoom(roomID: number, name: string){
     const message = {
       id: roomID,
-      name:name
+      roomName:name
     }
     return this.httpClient.post(environment.serverURL + `/renameRoom`, message).subscribe(data => console.log(data));
   }
