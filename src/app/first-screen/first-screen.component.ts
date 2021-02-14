@@ -49,6 +49,9 @@ export class FirstScreenComponent implements OnInit {
         this.room = main;
       }else if (Object.keys(roomsList).length !== 0){
         this.room = roomsList[0];
+      }else{
+        this.room = null;
+        this.Buttons = null;
       }
       this.apiHandler();
     }else{
@@ -78,7 +81,7 @@ export class FirstScreenComponent implements OnInit {
 
 
   openSceneDialog() {
-    const dialogRef = this.dialog.open(SceneDialogComponent, {restoreFocus: false});
+    const dialogRef = this.dialog.open(SceneDialogComponent, {restoreFocus: false, data: {devicesList: this.Buttons, roomName: this.room.roomName }});
 
     // Manually restore focus to the menu trigger since the element that
     // opens the dialog won't be in the DOM any more when the dialog closes.

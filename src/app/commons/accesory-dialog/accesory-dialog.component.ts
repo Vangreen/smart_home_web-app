@@ -47,7 +47,7 @@ export class AccesoryDialogComponent implements OnInit {
       .pipe(map(unassignedDevice => this.connect_callback(unassignedDevice)), takeUntil(this.unsubscribeSubject))
       .subscribe();
     this.firstFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
+      firstCtrl: ['', Validators.required]
     });
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required],

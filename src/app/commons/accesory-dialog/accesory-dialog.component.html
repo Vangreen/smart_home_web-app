@@ -1,9 +1,9 @@
 <mat-dialog-content>
   <mat-vertical-stepper linear #stepper>
-    <mat-step [editable]="isEditable">
+    <mat-step [stepControl]="firstFormGroup" [editable]="isEditable">
       <form [formGroup]="firstFormGroup">
         <ng-template matStepLabel>Wybierz urządzenie</ng-template>
-        <mat-selection-list #button >
+        <mat-selection-list formControlName="firstCtrl" #button [multiple]="false" >
           <ng-container *ngFor="let button of Buttons">
             <mat-list-option [value]="button">
 

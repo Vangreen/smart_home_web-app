@@ -3,7 +3,7 @@ import {RoomConfiguration} from "../../models/RoomConfiguration";
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {RoomService} from "../../service/room.service";
 
-var _ = require('lodash');
+const _ = require('lodash');
 
 export interface DialogData {
   roomsList: Array<RoomConfiguration>;

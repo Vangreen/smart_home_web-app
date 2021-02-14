@@ -1,0 +1,9 @@
+<button
+  mat-button
+  (click)="selectUnselectRule()"
+  [ngClass]="{'turnedOff' : toggle, 'turnedOn': !toggle}"
+  class="button">
+  <img src="{{img}}" class="light">
+  <p class="device">{{device.deviceName}}</p>
+  <!--  <p>{{connectionStatus}}</p>-->
+</button>

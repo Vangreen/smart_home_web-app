@@ -41,6 +41,9 @@ import { AdvancedOptionRoomDialogComponent } from './commons/advanced-option-roo
 import {MatTableModule} from "@angular/material/table";
 import {MatOptionModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
+import { LightBulbSelectButtonComponent } from './commons/light-bulb-select-button/light-bulb-select-button.component';
+import {CommonModule} from '@angular/common';
+import { DeviceSelectorDialogComponent } from './commons/device-selector-dialog/device-selector-dialog.component';
 
 
 @NgModule({
@@ -60,6 +63,8 @@ import {MatSelectModule} from '@angular/material/select';
     AccesoryDialogComponent,
     AddRoomDialogComponent,
     AdvancedOptionRoomDialogComponent,
+    LightBulbSelectButtonComponent,
+    DeviceSelectorDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -87,7 +92,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatCheckboxModule,
     MatTableModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

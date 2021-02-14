@@ -1,0 +1,13 @@
+<mat-dialog-content>
+<p class="category">{{roomName}}</p>
+<div class="row">
+  <ng-container *ngFor="let device of devicesList">
+    <app-light-bulb-select-button
+      [device]="device"
+      [toggle]="checkIfSelected(device)"></app-light-bulb-select-button>
+  </ng-container>
+</div>
+<div mat-dialog-actions>
+  <button mat-stroked-button [mat-dialog-close]="selectedDevicesList">Save</button>
+</div>
+</mat-dialog-content>
