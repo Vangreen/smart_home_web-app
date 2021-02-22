@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, Output, EventEmitter} from '@angular/core';
 import {Router} from '@angular/router';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {ColorPickerComponent} from '../color-picker/color-picker.component';
@@ -6,6 +6,8 @@ import {FirstScreenComponent} from '../../first-screen/first-screen.component';
 import {DeviceService} from '../../service/device.service';
 import {Subject} from 'rxjs';
 import {map, takeUntil} from 'rxjs/operators';
+import {MatDialog} from '@angular/material/dialog';
+import {ColorPickerSceneriesComponent} from '../color-picker-sceneries/color-picker-sceneries.component';
 
 
 @Component({
@@ -14,26 +16,32 @@ import {map, takeUntil} from 'rxjs/operators';
   styleUrls: ['./light-bulb-button.component.css']
 })
 export class LightBulbButtonComponent implements OnInit, OnDestroy {
+  @Input() serial: number;
+  @Input() name: string;
+  @Input() hsv: Array<number>;
+  @Input() status: string;
+  @Input() scenery: boolean;
+  @Output() hsvChange: EventEmitter<Array<number>> = new EventEmitter();
+  @Output() statusChange: EventEmitter<string> = new EventEmitter();
 
   constructor(
     private router: Router,
     private _bottomSheet: MatBottomSheet,
     private firstScreen: FirstScreenComponent,
-    private deviceService: DeviceService
+    private deviceService: DeviceService,
+    public dialog: MatDialog
   ) {
   }
+
   public msg = [];
-  @Input() serial: number;
-  @Input() name: string;
-  @Input() hsv: Array<number>;
-  @Input() status: string;
+
   toggle = true;
   img = 'assets/svg/lights/light_on.svg';
   disableClick = false;
   private unsubscribeSubject: Subject<void> = new Subject<void>();
 
   ngOnInit(): void {
-    if (this.serial !== undefined){
+    if (this.serial !== undefined) {
       if (this.status === 'Off') {
         this.toggleButton();
       }
@@ -44,7 +52,7 @@ export class LightBulbButtonComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     console.log('destroyed');
     if (this.serial !== undefined) {
       this.unsubscribeSubject.next();
@@ -55,28 +63,36 @@ export class LightBulbButtonComponent implements OnInit, OnDestroy {
 
   connect_callback(message) {
     console.log(message);
-    if (message){
+    if (message) {
       this.msg.push(message);
       if (message.task === 'status change' && message.status !== this.status) {
         this.toggleButton();
       } else if (message.task === 'color change') {
         this.hsv = [message.hue, message.saturation, message.brightness];
-      } else if (message.hue !== undefined) {                                  // temp
-        if (message.deviceStatus === 'On' && !this.toggle) {
-          this.toggleButton();
-        } else if (message.deviceStatus === 'Off' && this.toggle) {
-          this.toggleButton();
-        }
-        this.hsv = [message.hue, message.saturation, message.brightness];
+        this.emitData(this.hsvChange, this.hsv);
+      }                                // temp
+      if (message.status === 'On' && !this.toggle) {
+        this.toggleButton();
+      } else if (message.status === 'Off' && this.toggle) {
+        this.toggleButton();
       }
+      this.hsv = [message.hue, message.saturation, message.brightness];
+      this.emitData(this.hsvChange, this.hsv);
     }
 
-  };
+  }
 
   toggleButton(): void {
     this.toggle = !this.toggle;
     this.status = this.toggle ? 'On' : 'Off';
     this.img = this.toggle ? 'assets/svg/lights/light_on.svg' : 'assets/svg/lights/light_off.svg';
+    this.emitData(this.statusChange, this.status);
+  }
+
+  emitData(emitter: EventEmitter<any>, data: any): void {
+    if (this.scenery) {
+      emitter.emit(data);
+    }
   }
 
   getStatus(): string {
@@ -94,7 +110,7 @@ export class LightBulbButtonComponent implements OnInit, OnDestroy {
   }
 
   onLongPress(): void {
-    if (this.serial !== undefined) {
+    if (this.serial !== undefined && this.scenery === undefined) {
 
       const bottomSheet = this._bottomSheet.open(ColorPickerComponent, {
         data: {status: this.status, hsv: this.hsv, serial: this.serial}
@@ -102,6 +118,11 @@ export class LightBulbButtonComponent implements OnInit, OnDestroy {
       bottomSheet.afterDismissed().subscribe(data =>
         this.firstScreen.apiHandler()
       );
+    } else if (this.serial !== undefined && this.scenery !== undefined) {
+      const dialogRef = this.dialog.open(ColorPickerSceneriesComponent, {
+        restoreFocus: false,
+        data: {status: this.status, hsv: this.hsv, serial: this.serial}
+      });
     }
   }
 }

@@ -44,6 +44,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { LightBulbSelectButtonComponent } from './commons/light-bulb-select-button/light-bulb-select-button.component';
 import {CommonModule} from '@angular/common';
 import { DeviceSelectorDialogComponent } from './commons/device-selector-dialog/device-selector-dialog.component';
+import { ColorPickerSceneriesComponent } from './commons/color-picker-sceneries/color-picker-sceneries.component';
 
 
 @NgModule({
@@ -65,6 +66,7 @@ import { DeviceSelectorDialogComponent } from './commons/device-selector-dialog/
     AdvancedOptionRoomDialogComponent,
     LightBulbSelectButtonComponent,
     DeviceSelectorDialogComponent,
+    ColorPickerSceneriesComponent,
   ],
   imports: [
     BrowserModule,

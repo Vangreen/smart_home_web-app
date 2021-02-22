@@ -6,6 +6,14 @@
         <ng-template matStepLabel>Nazwa scenerii</ng-template>
         <div>
           <mat-form-field>
+            <mat-label>Choose Logo</mat-label>
+            <mat-select formControlName="logoFormGroup" [(ngModel)]="selectedLogo">
+              <mat-option *ngFor="let logo of logos" [value]="logo">
+                <img src="{{logo.path}}" class="img" >
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
             <mat-label>Name</mat-label>
             <input matInput formControlName="firstCtrl" [(ngModel)]="sceneryName"
                    required>
@@ -17,7 +25,7 @@
       </form>
     </mat-step>
 
-    <mat-step [stepControl]="secondFormGroup" [editable]="isEditable">
+    <mat-step  [editable]="isEditable">
       <form [formGroup]="secondFormGroup">
         <ng-template matStepLabel>Urządzenia</ng-template>
         <ng-container *ngIf="selectedDevices != null">
@@ -26,17 +34,17 @@
               <app-light-bulb-button
                 [name]="device.deviceName"
                 [serial]="device.serial"
-                [status]="device.deviceStatus"></app-light-bulb-button>
+                [status]="device.deviceStatus"
+                [scenery]="true"
+                (statusChange)="statusChanged($event, device.serial)"
+                (hsvChange)="hsvChanged($event, device.serial)"></app-light-bulb-button>
 
             </ng-container>
           <button mat-stroked-button (click)="selectDevices()">Add devices</button>
         </ng-container>
-        <ng-container *ngIf="selectedDevices == null">
-          <button mat-stroked-button (click)="selectDevices()">Add devices</button>
-        </ng-container>
         <div>
           <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext>Next</button>
+          <button mat-button (click)="finalStep(stepper)">Next</button>
         </div>
       </form>
     </mat-step>
@@ -48,8 +56,8 @@
         ></app-scenes-button>
       </div>
       <div class="center">
-<!--        <button mat-button mat-dialog-close (click)="onOkClick(button.selectedOptions.selected[0]?.value)">Dodaj-->
-<!--        </button>-->
+        <button mat-button mat-dialog-close (click)="createScenery()">Dodaj
+        </button>
       </div>
     </mat-step>
   </mat-vertical-stepper>

@@ -9,6 +9,8 @@ import {AccesoryDialogComponent} from '../commons/accesory-dialog/accesory-dialo
 import {RoomService} from '../service/room.service';
 import {map} from 'rxjs/operators';
 import {RoomConfiguration} from '../models/RoomConfiguration';
+import {SceneryService} from '../service/scenery.service';
+import {SceneryConfiguration} from '../models/SceneryConfiguration';
 
 @Component({
   selector: 'app-first-screen',
@@ -22,13 +24,15 @@ export class FirstScreenComponent implements OnInit {
 
   room: RoomConfiguration;
   Buttons: Array<DeviceConfiguration>;
+  Sceneries: Array<SceneryConfiguration>;
   roomsList: Array<RoomConfiguration>;
 
   constructor(
     private _bottomSheet: MatBottomSheet,
     private apiService: ApiService,
     public dialog: MatDialog,
-    private roomService: RoomService
+    private roomService: RoomService,
+    private sceneryService: SceneryService
   ) {
       this.room = null;
   }
@@ -60,14 +64,22 @@ export class FirstScreenComponent implements OnInit {
         this.room = newChosen;
       }
     }
+    this.reloadSceneries();
+  }
 
+  private reloadSceneries(){
+    this.sceneryService.getSceneries(this.room.id).subscribe((data: Array<SceneryConfiguration>) => {
+      this.Sceneries = data;
+      console.log('sceneries: ', data);
+    });
   }
 
   public apiHandler() {
-    if(this.room != null){
+    if (this.room != null){
       this.apiService.getDevices(this.room.id).subscribe((data: Array<DeviceConfiguration>) => {
         this.Buttons = data;
       });
+      this.reloadSceneries();
     }
   }
 
@@ -81,7 +93,7 @@ export class FirstScreenComponent implements OnInit {
 
 
   openSceneDialog() {
-    const dialogRef = this.dialog.open(SceneDialogComponent, {restoreFocus: false, data: {devicesList: this.Buttons, roomName: this.room.roomName }});
+    const dialogRef = this.dialog.open(SceneDialogComponent, {restoreFocus: false, data: {devicesList: this.Buttons, room: this.room }});
 
     // Manually restore focus to the menu trigger since the element that
     // opens the dialog won't be in the DOM any more when the dialog closes.

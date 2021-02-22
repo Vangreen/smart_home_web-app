@@ -4,7 +4,7 @@
   long-press (onLongPress)="onLongPress()"
   [ngClass]="{'turnedOn' : toggle, 'turnedOff': !toggle, 'disabledClick' : disableClick}"
   class="button">
-  <img src="{{img}}" class="img" >
-  <p class="scene">{{name}}</p>
+  <img *ngIf="sceneryConfig!=undefined" src="{{sceneryConfig.logo}}" class="img" >
+  <p *ngIf="sceneryConfig!=undefined" class="scene">{{sceneryConfig.sceneryName}}</p>
   <!--  <p>{{connectionStatus}}</p>-->
 </button>

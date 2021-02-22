@@ -29,24 +29,29 @@
   </div>
   <p class="category">Scenerie</p>
   <div class="grid-container scenes">
-    <app-scenes-button
-      [serial]=12345
-      [name]="'Nocny'"
-      [hsv]=[42,24,100]
-      [imgName]="'night-mode.svg'">
-    </app-scenes-button>
-    <app-scenes-button
-      [serial]=12345
-      [name]="'Jasność'"
-      [hsv]=[0,0,100]
-      [imgName]="'lightning.svg'">
-    </app-scenes-button>
-    <app-scenes-button
-      [serial]=12345
-      [name]="'Red'"
-      [hsv]=[358,94,100]
-      [imgName]="'favorite.svg'">
-    </app-scenes-button>
+    <ng-container *ngFor="let scene of Sceneries">
+          <app-scenes-button
+            [sceneryConfig]="scene">
+          </app-scenes-button>
+    </ng-container>
+<!--    <app-scenes-button-->
+<!--      [serial]=12345-->
+<!--      [name]="'Nocny'"-->
+<!--      [hsv]=[42,24,100]-->
+<!--      [imgName]="'night-mode.svg'">-->
+<!--    </app-scenes-button>-->
+<!--    <app-scenes-button-->
+<!--      [serial]=12345-->
+<!--      [name]="'Jasność'"-->
+<!--      [hsv]=[0,0,100]-->
+<!--      [imgName]="'lightning.svg'">-->
+<!--    </app-scenes-button>-->
+<!--    <app-scenes-button-->
+<!--      [serial]=12345-->
+<!--      [name]="'Red'"-->
+<!--      [hsv]=[358,94,100]-->
+<!--      [imgName]="'favorite.svg'">-->
+<!--    </app-scenes-button>-->
 
 
   </div>
@@ -56,6 +61,7 @@
       <app-light-bulb-button
         [name]="button.deviceName"
         [serial]="button.serial"
+        [scenery]="false"
         [status]="button.deviceStatus"></app-light-bulb-button>
     </ng-container>
   </div>
