@@ -31,7 +31,8 @@
   <div class="grid-container scenes">
     <ng-container *ngFor="let scene of Sceneries">
           <app-scenes-button
-            [sceneryConfig]="scene">
+            [sceneryConfig]="scene"
+          [roomID]="room.id">
           </app-scenes-button>
     </ng-container>
 <!--    <app-scenes-button-->

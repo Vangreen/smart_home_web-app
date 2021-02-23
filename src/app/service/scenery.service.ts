@@ -31,9 +31,9 @@ export class SceneryService {
     return this.httpClient.post(environment.serverURL + `/getSceneries`, message);
   }
 
-  sceneryConfiguration(sceneryID: number): Observable<any>{
+  sceneryConfiguration(roomID: number): Observable<any>{
     return this.websocket
-      .onMessage('/scenery/scenery/' + sceneryID)
+      .onMessage('/scenery/scenery/' + roomID)
       .pipe(map(sceneryConfig => sceneryConfig));
   }
 

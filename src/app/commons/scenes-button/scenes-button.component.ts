@@ -24,6 +24,7 @@ export class ScenesButtonComponent implements OnInit, OnDestroy {
   @Input() name: string;
   @Input() img: string;
   @Input() sceneryConfig: SceneryConfiguration;
+  @Input() roomID: number;
   toggle = true;
   subject;
   disableClick = false;
@@ -35,7 +36,7 @@ export class ScenesButtonComponent implements OnInit, OnDestroy {
         this.toggleButton();
       }
       this.sceneryService
-        .sceneryConfiguration(this.sceneryConfig.id)
+        .sceneryConfiguration(this.roomID)
         .pipe(map(sceneConfig => this.connect_callback(sceneConfig)), takeUntil(this.unsubscribeSubject))
         .subscribe();
     }
@@ -50,9 +51,11 @@ export class ScenesButtonComponent implements OnInit, OnDestroy {
 
   connect_callback(message: SceneryConfiguration){
     console.log('message: ', message);
-    if (message.sceneryStatus === 'On' && !this.toggle){
+    if (message.id === this.sceneryConfig.id && message.sceneryStatus === 'On' && !this.toggle){
       this.toggleButton();
-    }else if (message.sceneryStatus === 'Off' && this.toggle){
+    }else if (message.id === this.sceneryConfig.id && message.sceneryStatus === 'Off' && this.toggle){
+      this.toggleButton();
+    }else if (message.id !== this.sceneryConfig.id && message.sceneryStatus === 'On' && this.toggle){
       this.toggleButton();
     }
   }
