@@ -1,0 +1,19 @@
+<mat-dialog-content class="mat-typography">
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <mat-label>Nazwa</mat-label>
+    <input matInput [formControl]="emailFormControl"
+           [(ngModel)]="roomName"
+           placeholder="Np. Salon">
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      Nazwa pokoju jest  <strong>wymagana</strong>
+    </mat-error>
+  </mat-form-field>
+</form>
+  <mat-checkbox class="example-margin" [(ngModel)]="checked">Ustawić jako domyślny? </mat-checkbox>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button mat-dialog-close  (click)="onAddButtonClick()">Dodaj</button>
+</mat-dialog-actions>

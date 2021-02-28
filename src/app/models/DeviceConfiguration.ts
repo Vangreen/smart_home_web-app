@@ -6,7 +6,7 @@ export class DeviceConfiguration {
   brightness: number;
   deviceStatus: string;
   deviceConnectionStatus: string;
-  room: string;
+  roomID: string;
   deviceType: string;
   constructor(body) {
     this.serial = body.serial;
@@ -16,7 +16,7 @@ export class DeviceConfiguration {
     this.brightness = body.brightness;
     this.deviceStatus = body.deviceStatus;
     this.deviceConnectionStatus = body.deviceConnectionStatus;
-    this.room = body.room;
+    this.roomID = body.roomID;
     this.deviceType = body.deviceType;
   }
 }

@@ -16,22 +16,14 @@
     </ng-template>
     <div class="parent">
       <div class="center">
-        <div id="picker"  (click)="changeColorCircle()"
-             ></div>
-      </div>
-    </div>
-  </mat-tab>
-
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon class="example-tab-icon">settings</mat-icon>
-    </ng-template>
-    <div class="parent">
-      <div class="center">
-        <button mat-raised-button color="warn" (click)="onDeleteClick()">Delete</button>
+        <div id="picker" (touchend)="changeColorCircle()" (click)="changeColorCircle()"
+             (dragend)="changeColorCircle()"></div>
       </div>
     </div>
   </mat-tab>
 
 </mat-tab-group>
 
+<div mat-dialog-actions>
+  <button mat-stroked-button [mat-dialog-close]>Save</button>
+</div>

@@ -10,17 +10,17 @@ export class ApiService {
 
   constructor(private httpClient: HttpClient) {
   }
-  public getDevices(room: string){
-    const params = new HttpParams().set('room', room);
+  public getDevices(roomID: number){
+    const params = new HttpParams().set('roomID', String(roomID));
     return this.httpClient.get(environment.serverURL + `/getDevices`, {params});
   }
 
-  public addDevice(setSerial: number, deviceType: string, setName: string, setRoom: string){
+  public addDevice(setSerial: number, deviceType: string, setName: string, roomID: number){
     const message = {
       serial: setSerial,
       deviceType: deviceType,
       deviceName: setName,
-      room: setRoom
+      roomID: roomID
     };
     this.httpClient.post(environment.serverURL + `/addDevice`, message).subscribe(data => console.log(data));
   }

@@ -1,0 +1,29 @@
+.button{
+  width: 150px;
+  height: 150px;
+  margin: 15px;
+  border-radius:15%
+}
+
+.turnedOn {
+  background-color: white;
+}
+
+.turnedOff {
+  background-color: lightgrey;
+}
+
+.disabledClick{
+  pointer-events: none;
+  cursor: default;
+  background-color: indianred;
+}
+
+.light{
+  width: 50px;
+  height: 50px;
+}
+
+.device{
+  font-weight: bold;
+}

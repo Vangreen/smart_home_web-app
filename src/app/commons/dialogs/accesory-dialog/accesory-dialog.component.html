@@ -1,9 +1,9 @@
 <mat-dialog-content>
   <mat-vertical-stepper linear #stepper>
-    <mat-step [editable]="isEditable">
+    <mat-step [stepControl]="firstFormGroup" [editable]="isEditable">
       <form [formGroup]="firstFormGroup">
         <ng-template matStepLabel>Wybierz urządzenie</ng-template>
-        <mat-selection-list #button >
+        <mat-selection-list formControlName="firstCtrl" #button [multiple]="false" >
           <ng-container *ngFor="let button of Buttons">
             <mat-list-option [value]="button">
 
@@ -29,9 +29,10 @@
           </mat-form-field>
         </div>
         <mat-form-field>
-          <mat-label>Room</mat-label>
-          <input matInput formControlName="secondCtrl" [(ngModel)]="room"
-                 required>
+          <mat-label>Choose Room</mat-label>
+          <mat-select formControlName="thirdFormGroup" [(ngModel)]="selectedRoom">
+            <mat-option *ngFor="let room of roomsList" [value]="room">{{room.roomName}}</mat-option>
+          </mat-select>
         </mat-form-field>
         <div>
           <button mat-button matStepperPrevious>Back</button>
@@ -42,9 +43,9 @@
     <mat-step id="third">
       <ng-template matStepLabel>Koniec</ng-template>
       <div class="center">
-        <app-light-bulb-button
+        <app-light-bulb-mock
           [name]="name"
-        ></app-light-bulb-button>
+        ></app-light-bulb-mock>
       </div>
       <div class="center">
         <button mat-button mat-dialog-close (click)="onOkClick(button.selectedOptions.selected[0]?.value)">Dodaj

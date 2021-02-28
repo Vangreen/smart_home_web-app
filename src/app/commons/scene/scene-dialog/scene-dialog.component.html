@@ -1,0 +1,64 @@
+<mat-dialog-content>
+  <mat-vertical-stepper linear #stepper>
+
+    <mat-step [stepControl]="firstFormGroup" [editable]="isEditable">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Nazwa scenerii</ng-template>
+        <div>
+          <mat-form-field>
+            <mat-label>Choose Logo</mat-label>
+            <mat-select formControlName="logoFormGroup" [(ngModel)]="selectedLogo">
+              <mat-option *ngFor="let logo of logos" [value]="logo">
+                <img src="{{logo.path}}" class="img" >
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="firstCtrl" [(ngModel)]="sceneryName"
+                   required>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step  [editable]="isEditable">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Urządzenia</ng-template>
+        <ng-container *ngIf="selectedDevices != null">
+            <ng-container *ngFor="let device of selectedDevices">
+<!--              {{device.deviceName}}-->
+              <app-light-bulb-button
+                [configuration]="device"
+                [scenery]="true"
+                (statusChange)="statusChanged($event, device.serial)"
+                (hsvChange)="hsvChanged($event, device.serial)"></app-light-bulb-button>
+
+            </ng-container>
+          <button mat-stroked-button (click)="selectDevices()">Add devices</button>
+        </ng-container>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="finalStep(stepper)">Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step id="third">
+      <ng-template matStepLabel>Koniec</ng-template>
+      <div class="center">
+        <app-scenery-button-mock
+          [sceneryName]="sceneryName"
+          [logo]="selectedLogo.path"
+        ></app-scenery-button-mock>
+      </div>
+      <div class="center">
+        <button mat-button mat-dialog-close (click)="createScenery()">Dodaj
+        </button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</mat-dialog-content>
+
