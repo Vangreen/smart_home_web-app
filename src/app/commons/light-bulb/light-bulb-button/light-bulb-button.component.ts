@@ -68,7 +68,7 @@ export class LightBulbButtonComponent implements OnInit, OnDestroy {
       if (message.task === 'status change' && message.status !== this.configuration.deviceStatus) {
         this.toggleButton();
       } else if (message.task === 'color change') {
-        this.hsv = [message.hue, message.saturation, message.brightness];
+        this.changeHSV(message);
         this.emitData(this.hsvChange, this.hsv);
         if (message.status === 'On' && !this.toggle) {
           this.toggleButton();
@@ -77,6 +77,14 @@ export class LightBulbButtonComponent implements OnInit, OnDestroy {
         }
       }                                // temp
     }
+
+  }
+
+  changeHSV(message: any){
+    this.hsv = [message.hue, message.saturation, message.brightness];
+    this.configuration.hue = message.hue;
+    this.configuration.saturation = message.saturation;
+    this.configuration.brightness = message.brightness;
 
   }
 
@@ -111,7 +119,8 @@ export class LightBulbButtonComponent implements OnInit, OnDestroy {
     if (this.configuration.serial !== undefined && this.scenery === false) {
 
       const bottomSheet = this._bottomSheet.open(ColorPickerComponent, {
-        data: {status: this.configuration.deviceStatus, hsv: this.hsv, serial: this.configuration.serial}
+        data: {deviceConfiguration: this.configuration}
+        // data: {status: this.configuration.deviceStatus, hsv: this.hsv, serial: this.configuration.serial}
       });
       bottomSheet.afterDismissed().subscribe(data =>
         this.firstScreen.apiHandler()
@@ -119,7 +128,7 @@ export class LightBulbButtonComponent implements OnInit, OnDestroy {
     } else if (this.configuration.serial !== undefined && this.scenery !== undefined) {
       const dialogRef = this.dialog.open(ColorPickerSceneriesComponent, {
         restoreFocus: false,
-        data: {status: this.configuration.deviceStatus, hsv: this.hsv, serial: this.configuration.serial}
+        data: {deviceConfiguration: this.configuration}
       });
     }
   }
