@@ -36,7 +36,7 @@ export class ScenesButtonComponent implements OnInit, OnDestroy {
         this.toggleButton();
       }
       this.sceneryService
-        .sceneryConfiguration(this.roomID)
+        .sceneryConfiguration(this.sceneryConfig.id)
         .pipe(map(sceneConfig => this.connect_callback(sceneConfig)), takeUntil(this.unsubscribeSubject))
         .subscribe();
     }
@@ -51,11 +51,9 @@ export class ScenesButtonComponent implements OnInit, OnDestroy {
 
   connect_callback(message: SceneryConfiguration){
     console.log('message: ', message);
-    if (message.id === this.sceneryConfig.id && message.sceneryStatus === 'On' && !this.toggle){
+    if (message.sceneryStatus === 'On' && !this.toggle){
       this.toggleButton();
-    }else if (message.id === this.sceneryConfig.id && message.sceneryStatus === 'Off' && this.toggle){
-      this.toggleButton();
-    }else if (message.id !== this.sceneryConfig.id && message.sceneryStatus === 'On' && this.toggle){
+    }else if (message.sceneryStatus === 'Off' && this.toggle){
       this.toggleButton();
     }
   }

@@ -68,10 +68,12 @@ export class FirstScreenComponent implements OnInit {
   }
 
   private reloadSceneries(){
-    this.sceneryService.getSceneries(this.room.id).subscribe((data: Array<SceneryConfiguration>) => {
-      this.Sceneries = data;
-      console.log('sceneries: ', data);
-    });
+    if (this.room != null) {
+      this.sceneryService.getSceneries(this.room.id).subscribe((data: Array<SceneryConfiguration>) => {
+        this.Sceneries = data;
+        console.log('sceneries: ', data);
+      });
+    }
   }
 
   public apiHandler() {
@@ -94,7 +96,9 @@ export class FirstScreenComponent implements OnInit {
 
   openSceneDialog() {
     const dialogRef = this.dialog.open(SceneDialogComponent, {restoreFocus: false, data: {devicesList: this.Buttons, room: this.room }});
-
+    dialogRef.afterClosed().subscribe(data =>
+      this.reloadSceneries()
+    );
     // Manually restore focus to the menu trigger since the element that
     // opens the dialog won't be in the DOM any more when the dialog closes.
     // dialogRef.afterClosed().subscribe(() => this.menuTrigger.focus());
