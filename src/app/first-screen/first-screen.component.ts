@@ -136,6 +136,7 @@ export class FirstScreenComponent implements OnInit {
       if (dataFromChild != null) {
         this.room = dataFromChild;
         this.apiHandler();
+        this.reloadSceneries();
       }
     });
   }
