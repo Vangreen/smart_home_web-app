@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {DeviceConfiguration} from '../../models/DeviceConfiguration';
+import {DeviceConfiguration} from '../../../models/DeviceConfiguration';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {SceneDialogComponent} from '../scene-dialog/scene-dialog.component';
+import {SceneDialogComponent} from '../../scene/scene-dialog/scene-dialog.component';
 const _ = require('lodash');
 
 export interface DialogData{

@@ -32,9 +32,7 @@
             <ng-container *ngFor="let device of selectedDevices">
 <!--              {{device.deviceName}}-->
               <app-light-bulb-button
-                [name]="device.deviceName"
-                [serial]="device.serial"
-                [status]="device.deviceStatus"
+                [configuration]="device"
                 [scenery]="true"
                 (statusChange)="statusChanged($event, device.serial)"
                 (hsvChange)="hsvChanged($event, device.serial)"></app-light-bulb-button>
@@ -51,9 +49,10 @@
     <mat-step id="third">
       <ng-template matStepLabel>Koniec</ng-template>
       <div class="center">
-        <app-scenes-button
-          [name]="sceneryName"
-        ></app-scenes-button>
+        <app-scenery-button-mock
+          [sceneryName]="sceneryName"
+          [logo]="selectedLogo.path"
+        ></app-scenery-button-mock>
       </div>
       <div class="center">
         <button mat-button mat-dialog-close (click)="createScenery()">Dodaj

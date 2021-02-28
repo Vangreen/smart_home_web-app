@@ -35,24 +35,6 @@
           [roomID]="room.id">
           </app-scenes-button>
     </ng-container>
-<!--    <app-scenes-button-->
-<!--      [serial]=12345-->
-<!--      [name]="'Nocny'"-->
-<!--      [hsv]=[42,24,100]-->
-<!--      [imgName]="'night-mode.svg'">-->
-<!--    </app-scenes-button>-->
-<!--    <app-scenes-button-->
-<!--      [serial]=12345-->
-<!--      [name]="'Jasność'"-->
-<!--      [hsv]=[0,0,100]-->
-<!--      [imgName]="'lightning.svg'">-->
-<!--    </app-scenes-button>-->
-<!--    <app-scenes-button-->
-<!--      [serial]=12345-->
-<!--      [name]="'Red'"-->
-<!--      [hsv]=[358,94,100]-->
-<!--      [imgName]="'favorite.svg'">-->
-<!--    </app-scenes-button>-->
 
 
   </div>
@@ -60,10 +42,10 @@
   <div class="row">
     <ng-container *ngFor="let button of Buttons">
       <app-light-bulb-button
-        [name]="button.deviceName"
-        [serial]="button.serial"
+        [configuration]="button"
         [scenery]="false"
-        [status]="button.deviceStatus"></app-light-bulb-button>
+        (statusChange)="statusChanged($event, button.serial)"
+        (hsvChange)="hsvChanged($event, button.serial)"></app-light-bulb-button>
     </ng-container>
   </div>
 </div>

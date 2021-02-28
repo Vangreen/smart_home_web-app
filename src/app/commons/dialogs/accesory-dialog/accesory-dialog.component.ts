@@ -1,13 +1,14 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {ApiService} from '../../service/api.service';
-import {UnassignedDevice} from '../../models/UnassignedDevice';
+import {ApiService} from '../../../service/api.service';
+import {UnassignedDevice} from '../../../models/UnassignedDevice';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {SnackbarService} from '../snack-bar/snackbar.service';
-import {DeviceService} from '../../service/device.service';
+import {SnackbarService} from '../../snack-bar/snackbar.service';
+import {DeviceService} from '../../../service/device.service';
 import {map, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
-import {RoomConfiguration} from '../../models/RoomConfiguration';
+import {RoomConfiguration} from '../../../models/RoomConfiguration';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {DeviceConfiguration} from '../../../models/DeviceConfiguration';
 
 export interface DialogData {
   roomsList: Array<RoomConfiguration>;
@@ -22,12 +23,12 @@ export class AccesoryDialogComponent implements OnInit {
   Buttons: Array<UnassignedDevice>;
   src: string;
   name = null;
-  room = null;
   selectedRoom: RoomConfiguration;
   roomsList: Array<RoomConfiguration>;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   isEditable = true;
+  deviceConf: DeviceConfiguration;
   private unsubscribeSubject: Subject<void> = new Subject<void>();
 
   constructor(

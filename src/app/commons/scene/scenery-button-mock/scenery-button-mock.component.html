@@ -1,10 +1,9 @@
 <button
   mat-button
   (click)="enableDisableRule()"
-  long-press (onLongPress)="onLongPress()"
   [ngClass]="{'turnedOn' : toggle, 'turnedOff': !toggle, 'disabledClick' : disableClick}"
   class="button">
-  <img src="{{img}}" class="light">
-  <p class="device">{{name}}</p>
+  <img src="{{logo}}" class="img" >
+  <p class="scene">{{sceneryName}}</p>
   <!--  <p>{{connectionStatus}}</p>-->
 </button>

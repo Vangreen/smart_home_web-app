@@ -4,13 +4,14 @@ import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {ApiService} from '../service/api.service';
 import {DeviceConfiguration} from '../models/DeviceConfiguration';
 import {MatDialog} from '@angular/material/dialog';
-import {SceneDialogComponent} from '../commons/scene-dialog/scene-dialog.component';
-import {AccesoryDialogComponent} from '../commons/accesory-dialog/accesory-dialog.component';
+import {SceneDialogComponent} from '../commons/scene/scene-dialog/scene-dialog.component';
+import {AccesoryDialogComponent} from '../commons/dialogs/accesory-dialog/accesory-dialog.component';
 import {RoomService} from '../service/room.service';
 import {map} from 'rxjs/operators';
 import {RoomConfiguration} from '../models/RoomConfiguration';
 import {SceneryService} from '../service/scenery.service';
 import {SceneryConfiguration} from '../models/SceneryConfiguration';
+const _ = require('lodash');
 
 @Component({
   selector: 'app-first-screen',
@@ -87,6 +88,17 @@ export class FirstScreenComponent implements OnInit {
 
   setRoom(room: RoomConfiguration): void {
     this._bottomSheet.dismiss(room);
+  }
+
+  statusChanged(status: string, deviceSerial: number){
+    _.set(_.find(this.Buttons, {serial: deviceSerial}), 'deviceStatus', status);
+  }
+
+  hsvChanged(hsv: Array<number>, deviceSerial: number){
+    console.log('hsv: ', hsv);
+    _.set(_.find(this.Buttons, {serial: deviceSerial}), 'hue', hsv[0]);
+    _.set(_.find(this.Buttons, {serial: deviceSerial}), 'saturation', hsv[1]);
+    _.set(_.find(this.Buttons, {serial: deviceSerial}), 'brightness', hsv[2]);
   }
 
   closeBottomSheet(): void {

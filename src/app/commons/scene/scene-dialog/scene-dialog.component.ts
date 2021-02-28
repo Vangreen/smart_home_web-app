@@ -1,11 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {DeviceConfiguration} from '../../models/DeviceConfiguration';
+import {DeviceConfiguration} from '../../../models/DeviceConfiguration';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
-import {DeviceSelectorDialogComponent} from '../device-selector-dialog/device-selector-dialog.component';
+import {DeviceSelectorDialogComponent} from '../../dialogs/device-selector-dialog/device-selector-dialog.component';
 import {MatStepper} from '@angular/material/stepper';
-import {SceneryService} from '../../service/scenery.service';
-import {RoomConfiguration} from '../../models/RoomConfiguration';
+import {SceneryService} from '../../../service/scenery.service';
+import {RoomConfiguration} from '../../../models/RoomConfiguration';
 const _ = require('lodash');
 
 
@@ -31,7 +31,7 @@ export class SceneDialogComponent implements OnInit {
   logos;
 
   selectedLogo: {id: number,
-                  path: string} = null;
+                  path: string};
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: DialogData,
@@ -41,6 +41,7 @@ export class SceneDialogComponent implements OnInit {
   ) {
     this.devicesList = data.devicesList;
     this.room = data.room;
+    this.selectedLogo = { id: null, path: null};
     this.selectedDevices = [];
     this.logos = [{
       id: 1,
@@ -76,9 +77,6 @@ export class SceneDialogComponent implements OnInit {
     _.set(_.find(this.selectedDevices, {serial: deviceSerial}), 'hue', hsv[0]);
     _.set(_.find(this.selectedDevices, {serial: deviceSerial}), 'saturation', hsv[1]);
     _.set(_.find(this.selectedDevices, {serial: deviceSerial}), 'brightness', hsv[2]);
-    // console.log('selectedDevices: ', this.selectedDevices);
-
-    // _.unionWith([{hue: hsv[0], saturation: hsv[1], brightness: hsv[2]}], this.selectedDevices, device => device.serial === deviceSerial);
   }
 
   selectDevices(){

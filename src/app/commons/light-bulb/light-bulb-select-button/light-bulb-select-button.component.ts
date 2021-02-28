@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {DeviceConfiguration} from '../../models/DeviceConfiguration';
-import {DeviceSelectorDialogComponent} from '../device-selector-dialog/device-selector-dialog.component';
+import {DeviceConfiguration} from '../../../models/DeviceConfiguration';
+import {DeviceSelectorDialogComponent} from '../../dialogs/device-selector-dialog/device-selector-dialog.component';
 
 @Component({
   selector: 'app-light-bulb-select-button',

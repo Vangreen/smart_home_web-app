@@ -2,8 +2,8 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {ScenesDetailsComponent} from '../scenes-details/scenes-details.component';
-import {SceneryConfiguration} from '../../models/SceneryConfiguration';
-import {SceneryService} from '../../service/scenery.service';
+import {SceneryConfiguration} from '../../../models/SceneryConfiguration';
+import {SceneryService} from '../../../service/scenery.service';
 import {map, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 
@@ -21,8 +21,6 @@ export class ScenesButtonComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  @Input() name: string;
-  @Input() img: string;
   @Input() sceneryConfig: SceneryConfiguration;
   @Input() roomID: number;
   toggle = true;

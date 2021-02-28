@@ -43,9 +43,9 @@
     <mat-step id="third">
       <ng-template matStepLabel>Koniec</ng-template>
       <div class="center">
-        <app-light-bulb-button
+        <app-light-bulb-mock
           [name]="name"
-        ></app-light-bulb-button>
+        ></app-light-bulb-mock>
       </div>
       <div class="center">
         <button mat-button mat-dialog-close (click)="onOkClick(button.selectedOptions.selected[0]?.value)">Dodaj
