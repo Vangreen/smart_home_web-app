@@ -30,6 +30,14 @@
       <div class="center">
         <button mat-raised-button color="warn" (click)="onDeleteClick()">Delete</button>
       </div>
+      <mat-form-field class="example-full-width">
+        <mat-label>Nazwa Urządzenia</mat-label>
+        <input matInput
+               [(ngModel)]="deviceConfiguration.deviceName" (change)="renameDevice(deviceConfiguration.deviceName)">
+      </mat-form-field>
+      <p>Serial: {{deviceConfiguration.serial}}</p>
+      <p>Device Type: {{deviceConfiguration.deviceType}}</p>
+
     </div>
   </mat-tab>
 
