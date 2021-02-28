@@ -4,7 +4,6 @@ import {MatDialog} from '@angular/material/dialog';
 import {AddRoomDialogComponent} from '../../add-room-dialog/add-room-dialog.component';
 import {MAT_BOTTOM_SHEET_DATA, MatBottomSheet} from '@angular/material/bottom-sheet';
 import {RoomConfiguration} from '../../models/RoomConfiguration';
-import {RoomService} from '../../service/room.service';
 import {AdvancedOptionRoomDialogComponent} from '../dialogs/advanced-option-room-dialog/advanced-option-room-dialog.component';
 
 export interface DialogData {
@@ -36,7 +35,6 @@ export class BottomSheetComponent implements OnInit {
   }
 
   setRoom(room: RoomConfiguration): void {
-    console.log("click");
     this.firstScreen.setRoom(room);
   }
 

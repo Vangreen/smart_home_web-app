@@ -47,7 +47,6 @@ export class FirstScreenComponent implements OnInit {
 
   roomsListChange(roomsList: Array<RoomConfiguration>){
     this.roomsList = roomsList;
-    // if (Object.keys(this.room).length === 0){
     if (this.room == null){
       const main = roomsList.find(ele => ele.main === 'yes');
       if (main !== undefined){
