@@ -35,6 +35,9 @@
         <input matInput
                [(ngModel)]="deviceConfiguration.deviceName" (change)="renameDevice(deviceConfiguration.deviceName)">
       </mat-form-field>
+      <p>Serial: {{deviceConfiguration.serial}}</p>
+      <p>Device Type: {{deviceConfiguration.deviceType}}</p>
+
     </div>
   </mat-tab>
 
