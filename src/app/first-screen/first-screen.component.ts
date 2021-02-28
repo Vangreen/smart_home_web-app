@@ -82,7 +82,6 @@ export class FirstScreenComponent implements OnInit {
       this.apiService.getDevices(this.room.id).subscribe((data: Array<DeviceConfiguration>) => {
         this.Buttons = data;
       });
-      this.reloadSceneries();
     }
   }
 

@@ -18,10 +18,7 @@ import {DeviceConfiguration} from '../../../models/DeviceConfiguration';
 })
 export class LightBulbButtonComponent implements OnInit, OnDestroy {
   @Input() configuration: DeviceConfiguration;
-  // @Input() serial: number;
-  // @Input() name: string;
   hsv: Array<number>;
-  // @Input() status: string;
   @Input() scenery: boolean;
   @Output() hsvChange: EventEmitter<Array<number>> = new EventEmitter();
   @Output() statusChange: EventEmitter<string> = new EventEmitter();
@@ -43,6 +40,7 @@ export class LightBulbButtonComponent implements OnInit, OnDestroy {
   private unsubscribeSubject: Subject<void> = new Subject<void>();
 
   ngOnInit(): void {
+    this.hsv = [this.configuration.hue, this.configuration.saturation, this.configuration.brightness];
     if (this.configuration.serial !== undefined) {
       if (this.configuration.deviceStatus === 'Off') {
         this.toggleButton();
@@ -72,12 +70,12 @@ export class LightBulbButtonComponent implements OnInit, OnDestroy {
       } else if (message.task === 'color change') {
         this.hsv = [message.hue, message.saturation, message.brightness];
         this.emitData(this.hsvChange, this.hsv);
+        if (message.status === 'On' && !this.toggle) {
+          this.toggleButton();
+        } else if (message.status === 'Off' && this.toggle) {
+          this.toggleButton();
+        }
       }                                // temp
-      // if (message.status === 'On' && !this.toggle) {
-      //   this.toggleButton();
-      // } else if (message.status === 'Off' && this.toggle) {
-      //   this.toggleButton();
-      // }
     }
 
   }
