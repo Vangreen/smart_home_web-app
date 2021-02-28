@@ -31,6 +31,11 @@ export class SceneryService {
     return this.httpClient.post(environment.serverURL + `/getSceneries`, message);
   }
 
+  public deleteScenery(sceneryID: number){
+    console.log("delete scenery")
+    return this.httpClient.delete(environment.serverURL + `/deleteScenery/${sceneryID}`);
+  }
+
   sceneryConfiguration(sceneryID: number): Observable<any>{
     return this.websocket
       .onMessage('/scenery/scenery/' + sceneryID)
