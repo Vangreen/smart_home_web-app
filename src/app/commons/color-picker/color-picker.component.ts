@@ -34,7 +34,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy {
     private apiService: ApiService,
     private _bottomSheet: MatBottomSheet,
     private snackBarService: SnackbarService,
-    private webSocketService: DeviceService
+    private webSocketService: DeviceService,
+    private deviceService: DeviceService
 
   ) {
     this.deviceConfiguration = data.deviceConfiguration;
@@ -99,11 +100,14 @@ export class ColorPickerComponent implements OnInit, OnDestroy {
         borderWidth: 1,
         borderColor: '#fff',
       });
-    }else{
+    }else if (tab.index === 1){
       this.colorPicker.color.hsv = {h: this.deviceConfiguration.hue, s: this.deviceConfiguration.saturation, v: this.deviceConfiguration.brightness};
     }
   }
 
+  renameDevice(newName: string){
+    this.deviceService.changeDeviceName(this.deviceConfiguration.serial, newName);
+  }
 
   onDeleteClick() {
     this.apiService.deleteDevice(this.deviceConfiguration.serial);
