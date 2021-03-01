@@ -4,11 +4,12 @@
   <mat-list-item>
     <mat-icon mat-list-icon>font_download</mat-icon>
     <div mat-line>Nazwa:</div>
-    <div mat-line>{{name}} </div>
+    <div mat-line>{{sceneryConfiguration.sceneryName}} </div>
   </mat-list-item>
   <mat-list-item>
-    <img mat-list-icon src="{{img}}">
+    <img mat-list-icon src="{{sceneryConfiguration.logo}}">
     <div mat-line>Ikona</div>
   </mat-list-item>
+  <button mat-raised-button color="warn" (click)="onDeleteClick()">Delete</button>
   <mat-divider></mat-divider>
 </mat-list>

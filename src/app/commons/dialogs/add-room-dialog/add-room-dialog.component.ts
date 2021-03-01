@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
-import {RoomService} from '../service/room.service';
+import {RoomService} from '../../../service/room.service';
 
 @Component({
   selector: 'app-add-room-dialog',

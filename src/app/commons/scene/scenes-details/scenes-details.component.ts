@@ -1,11 +1,14 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_BOTTOM_SHEET_DATA} from '@angular/material/bottom-sheet';
+import {MAT_BOTTOM_SHEET_DATA, MatBottomSheet} from '@angular/material/bottom-sheet';
 import iro from '@jaames/iro';
+import {SceneryService} from '../../../service/scenery.service';
+import {SceneryConfiguration} from '../../../models/SceneryConfiguration';
+import {SnackbarService} from '../../snack-bar/snackbar.service';
+import {FirstScreenComponent} from '../../../first-screen/first-screen.component';
 
 
 export interface DialogData {
-  name: string;
-  img: string;
+  sceneryConfig: SceneryConfiguration;
 }
 
 @Component({
@@ -14,19 +17,25 @@ export interface DialogData {
   styleUrls: ['./scenes-details.component.css']
 })
 export class ScenesDetailsComponent implements OnInit {
-
-  name: string;
+  sceneryConfiguration: SceneryConfiguration;
   rgb: any;
   colorPicker: iro.Color;
-  img: string;
 
-  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: DialogData) {
-    this.name = data.name;
-    this.img = data.img;
+  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: DialogData,
+              private sceneryService: SceneryService,
+              private _bottomSheet: MatBottomSheet,
+              private snackBarService: SnackbarService
+  ) {
+    this.sceneryConfiguration = data.sceneryConfig;
   }
 
   ngOnInit(): void {
 
   }
 
+  onDeleteClick(){
+    this.sceneryService.deleteScenery(this.sceneryConfiguration.id).subscribe();
+    this._bottomSheet.dismiss();
+    this.snackBarService.openSnackBar('Sceneria usunięta');
+  }
 }

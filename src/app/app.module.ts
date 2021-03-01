@@ -35,7 +35,7 @@ import {AccesoryDialogComponent} from './commons/dialogs/accesory-dialog/accesor
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {AddRoomDialogComponent} from './add-room-dialog/add-room-dialog.component';
+import {AddRoomDialogComponent} from './commons/dialogs/add-room-dialog/add-room-dialog.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { AdvancedOptionRoomDialogComponent } from './commons/dialogs/advanced-option-room-dialog/advanced-option-room-dialog.component';
 import {MatTableModule} from '@angular/material/table';

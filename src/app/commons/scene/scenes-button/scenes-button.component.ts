@@ -68,7 +68,7 @@ export class ScenesButtonComponent implements OnInit, OnDestroy {
 
   onLongPress() {
     this._bottomSheet.open(ScenesDetailsComponent, {
-      data: {name: this.sceneryConfig.sceneryName, img: this.sceneryConfig.logo}
+      data: {sceneryConfig: this.sceneryConfig}
     });
   }
 

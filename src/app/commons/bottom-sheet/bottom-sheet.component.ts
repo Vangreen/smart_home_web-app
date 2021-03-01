@@ -1,7 +1,7 @@
 import {Component, Inject, Injectable, OnInit} from '@angular/core';
 import {FirstScreenComponent} from '../../first-screen/first-screen.component';
 import {MatDialog} from '@angular/material/dialog';
-import {AddRoomDialogComponent} from '../../add-room-dialog/add-room-dialog.component';
+import {AddRoomDialogComponent} from '../dialogs/add-room-dialog/add-room-dialog.component';
 import {MAT_BOTTOM_SHEET_DATA, MatBottomSheet} from '@angular/material/bottom-sheet';
 import {RoomConfiguration} from '../../models/RoomConfiguration';
 import {AdvancedOptionRoomDialogComponent} from '../dialogs/advanced-option-room-dialog/advanced-option-room-dialog.component';
