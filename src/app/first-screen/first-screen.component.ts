@@ -7,10 +7,11 @@ import {MatDialog} from '@angular/material/dialog';
 import {SceneDialogComponent} from '../commons/scene/scene-dialog/scene-dialog.component';
 import {AccesoryDialogComponent} from '../commons/dialogs/accesory-dialog/accesory-dialog.component';
 import {RoomService} from '../service/room.service';
-import {map} from 'rxjs/operators';
+import {map, takeUntil} from 'rxjs/operators';
 import {RoomConfiguration} from '../models/RoomConfiguration';
 import {SceneryService} from '../service/scenery.service';
 import {SceneryConfiguration} from '../models/SceneryConfiguration';
+import {Subject} from 'rxjs';
 const _ = require('lodash');
 
 @Component({
@@ -27,6 +28,7 @@ export class FirstScreenComponent implements OnInit {
   Buttons: Array<DeviceConfiguration>;
   Sceneries: Array<SceneryConfiguration>;
   roomsList: Array<RoomConfiguration>;
+  private unsubscribeSubject: Subject<void> = new Subject<void>();
 
   constructor(
     private _bottomSheet: MatBottomSheet,
@@ -43,6 +45,21 @@ export class FirstScreenComponent implements OnInit {
       .roomConf()
       .pipe(map(roomConf => this.roomsListChange(roomConf)))
       .subscribe();
+  }
+
+  roomChangeResubscribe(roomID: number){
+    this.unsubscribeSubject.next();
+    this.unsubscribeSubject.complete();
+    this.unsubscribeSubject = new Subject<void>();
+    this.sceneryService
+      .sceneriesList(roomID)
+      .pipe(map(sceneriesList => this.sceneriesListChange(sceneriesList)), takeUntil(this.unsubscribeSubject))
+      .subscribe();
+  }
+
+  sceneriesListChange(sceneriesList: Array<SceneryConfiguration>){
+    console.log("sceneriesList: ", sceneriesList)
+    this.Sceneries = sceneriesList;
   }
 
   roomsListChange(roomsList: Array<RoomConfiguration>){
@@ -64,17 +81,9 @@ export class FirstScreenComponent implements OnInit {
         this.room = newChosen;
       }
     }
-    this.reloadSceneries();
+    this.roomChangeResubscribe(this.room.id);
   }
 
-  private reloadSceneries(){
-    if (this.room != null) {
-      this.sceneryService.getSceneries(this.room.id).subscribe((data: Array<SceneryConfiguration>) => {
-        this.Sceneries = data;
-        console.log('sceneries: ', data);
-      });
-    }
-  }
 
   public apiHandler() {
     if (this.room != null){
@@ -105,10 +114,8 @@ export class FirstScreenComponent implements OnInit {
 
 
   openSceneDialog() {
-    const dialogRef = this.dialog.open(SceneDialogComponent, {restoreFocus: false, data: {devicesList: this.Buttons, room: this.room }});
-    dialogRef.afterClosed().subscribe(data =>
-      this.reloadSceneries()
-    );
+    this.dialog.open(SceneDialogComponent, {restoreFocus: false, data: {devicesList: this.Buttons, room: this.room }});
+
     // Manually restore focus to the menu trigger since the element that
     // opens the dialog won't be in the DOM any more when the dialog closes.
     // dialogRef.afterClosed().subscribe(() => this.menuTrigger.focus());
@@ -135,7 +142,7 @@ export class FirstScreenComponent implements OnInit {
       if (dataFromChild != null) {
         this.room = dataFromChild;
         this.apiHandler();
-        this.reloadSceneries();
+        this.roomChangeResubscribe(this.room.id);
       }
     });
   }
