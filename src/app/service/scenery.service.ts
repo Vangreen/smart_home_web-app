@@ -24,13 +24,6 @@ export class SceneryService {
     this.httpClient.post(environment.serverURL + `/addScenery`, message).subscribe(data => console.log(data));
   }
 
-  public getSceneries(roomID: number){
-    const message = {
-      roomID: roomID
-    };
-    return this.httpClient.post(environment.serverURL + `/getSceneries`, message);
-  }
-
   public deleteScenery(sceneryID: number){
     console.log("delete scenery")
     return this.httpClient.delete(environment.serverURL + `/deleteScenery/${sceneryID}`);
