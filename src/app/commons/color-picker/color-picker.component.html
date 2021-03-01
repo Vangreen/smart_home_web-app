@@ -4,6 +4,10 @@
       <mat-icon class="example-tab-icon">color_lens</mat-icon>
     </ng-template>
     <div class="parent">
+      <mat-checkbox class="example-margin"
+                    [checked]="checked"
+                    (change)="floatingTrigger($event.checked)">Pływające światła
+      </mat-checkbox>
       <div class="center">
         <color-circle (onChangeComplete)="changeColor($event)" [colors]="colors"></color-circle>
       </div>
@@ -16,8 +20,8 @@
     </ng-template>
     <div class="parent">
       <div class="center">
-        <div id="picker"  (click)="changeColorCircle()"
-             ></div>
+        <div id="picker"  (touchend)="changeColorCircle()" (click)="changeColorCircle()"
+             (dragend)="changeColorCircle()"></div>
       </div>
     </div>
   </mat-tab>

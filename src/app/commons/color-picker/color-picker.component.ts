@@ -26,6 +26,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy {
   colors: string[];
   executed = false;
   colorPicker: iro.ColorPicker;
+  checked: boolean = false;
   private unsubscribeSubject: Subject<void> = new Subject<void>();
 
 
@@ -113,6 +114,17 @@ export class ColorPickerComponent implements OnInit, OnDestroy {
     this.apiService.deleteDevice(this.deviceConfiguration.serial);
     this._bottomSheet.dismiss();
     this.snackBarService.openSnackBar('Urządzenie usunięte');
+  }
+
+  floatingTrigger(checked: boolean){
+    console.log(checked);
+    this.checked = checked;
+    this.deviceConfiguration.deviceStatus = this.checked ? 'Floating' : 'Off';
+    const message = {
+      status: this.deviceConfiguration.deviceStatus
+    };
+    this.deviceService.changeDeviceStatus(this.deviceConfiguration.serial, message);
+
   }
 
 }
