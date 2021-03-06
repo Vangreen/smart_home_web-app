@@ -37,6 +37,7 @@ export class LightBulbButtonComponent implements OnInit, OnDestroy {
   toggle = true;
   img = 'assets/svg/lights/light_on.svg';
   disableClick = false;
+  floating = false;
   private unsubscribeSubject: Subject<void> = new Subject<void>();
 
   ngOnInit(): void {
@@ -44,6 +45,9 @@ export class LightBulbButtonComponent implements OnInit, OnDestroy {
     if (this.configuration.serial !== undefined) {
       if (this.configuration.deviceStatus === 'Off') {
         this.toggleButton();
+      }
+      if (this.configuration.floatingStatus === 'On'){
+        this.floating = true;
       }
       this.deviceService
         .deviceConf(this.configuration.serial)
@@ -65,27 +69,42 @@ export class LightBulbButtonComponent implements OnInit, OnDestroy {
     console.log(message);
     if (message) {
       this.msg.push(message);
-      if (message.task === 'status change' && message.status !== this.configuration.deviceStatus) {
-        this.toggleButton();
+      if (message.task === 'status change') {
+        if (message.status !== this.configuration.deviceStatus){
+          this.toggleButton();
+        }
+        this.updateLocalStatus(message);
+        // this.configuration.deviceStatus = message.status;
+        // this.configuration.floatingStatus = message.floatingStatus;
+        // this.configuration.floatingSpeed = message.floatingSpeed;
       } else if (message.task === 'color change') {
-        this.changeHSV(message);
+        this.updateLocalHSV(message);
         this.emitData(this.hsvChange, this.hsv);
         if (message.status === 'On' && !this.toggle) {
           this.toggleButton();
         } else if (message.status === 'Off' && this.toggle) {
           this.toggleButton();
         }
-      }                                // temp
+        this.updateLocalStatus(message);
+        // this.configuration.deviceStatus = message.status;
+        // this.configuration.floatingStatus = message.floatingStatus;
+        // this.configuration.floatingSpeed = message.floatingSpeed;
+      }
     }
 
   }
 
-  changeHSV(message: any){
+  updateLocalHSV(message: any){
     this.hsv = [message.hue, message.saturation, message.brightness];
     this.configuration.hue = message.hue;
     this.configuration.saturation = message.saturation;
     this.configuration.brightness = message.brightness;
+  }
 
+  updateLocalStatus(message: any){
+    this.configuration.deviceStatus = message.status;
+    this.configuration.floatingStatus = message.floatingStatus;
+    this.configuration.floatingSpeed = message.floatingSpeed;
   }
 
   toggleButton(): void {
@@ -109,7 +128,9 @@ export class LightBulbButtonComponent implements OnInit, OnDestroy {
     this.toggleButton();
     if (this.configuration.serial !== undefined) {
       const message = {
-        status: this.configuration.deviceStatus
+        status: this.configuration.deviceStatus,
+        floatingStatus: this.configuration.floatingStatus,
+        floatingSpeed: this.configuration.floatingSpeed
       };
       this.deviceService.changeDeviceStatus(this.configuration.serial, message);
     }

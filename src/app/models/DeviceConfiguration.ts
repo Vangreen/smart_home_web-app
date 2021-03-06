@@ -5,9 +5,12 @@ export class DeviceConfiguration {
   saturation: number;
   brightness: number;
   deviceStatus: string;
+  floatingStatus: string;
+  floatingSpeed: number;
   deviceConnectionStatus: string;
   roomID: string;
   deviceType: string;
+
   constructor(body) {
     this.serial = body.serial;
     this.deviceName = body.deviceName;
@@ -15,6 +18,8 @@ export class DeviceConfiguration {
     this.saturation = body.saturation;
     this.brightness = body.brightness;
     this.deviceStatus = body.deviceStatus;
+    this.floatingStatus = body.floatingStatus;
+    this.floatingSpeed = body.floatingSpeed;
     this.deviceConnectionStatus = body.deviceConnectionStatus;
     this.roomID = body.roomID;
     this.deviceType = body.deviceType;
