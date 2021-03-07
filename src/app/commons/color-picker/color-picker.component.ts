@@ -79,8 +79,12 @@ export class ColorPickerComponent implements OnInit, OnDestroy {
       status: this.deviceConfiguration.deviceStatus,
       hue: this.butHue,
       saturation: sat,
-      brightness: this.deviceConfiguration.brightness
+      brightness: this.deviceConfiguration.brightness,
+      floatingStatus: 'Off',
+      floatingSpeed: this.deviceConfiguration.floatingSpeed
     };
+    this.checked = false;
+    this.deviceConfiguration.floatingStatus = 'Off';
     this.deviceConfiguration.hue = this.butHue;
     this.webSocketService.changeDeviceColor(this.deviceConfiguration.serial, message);
   }
@@ -89,13 +93,24 @@ export class ColorPickerComponent implements OnInit, OnDestroy {
     console.log(element.color.hsv);
     console.log('COLOR CHANGE PICKER Circle');
     this.butHue = element.color.hsv.h;
+    let floating;
+    if (element === this.colorSlider && this.checked){
+      floating = 'On';
+    }else{
+      floating = 'Off';
+      this.checked = false;
+      this.deviceConfiguration.floatingStatus = 'Off';
+    }
     const message = {
       task: 'color change',
       status: this.deviceConfiguration.deviceStatus,
       hue: element.color.hsv.h,
       saturation: element.color.hsv.s,
-      brightness: element.color.hsv.v
+      brightness: element.color.hsv.v,
+      floatingStatus: floating,
+      floatingSpeed: this.deviceConfiguration.floatingSpeed
     };
+
     this.webSocketService.changeDeviceColor(this.deviceConfiguration.serial, message);
   }
 
