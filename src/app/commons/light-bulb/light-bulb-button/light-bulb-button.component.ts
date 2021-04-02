@@ -9,6 +9,7 @@ import {map, takeUntil} from 'rxjs/operators';
 import {MatDialog} from '@angular/material/dialog';
 import {ColorPickerSceneriesComponent} from '../../color-picker-sceneries/color-picker-sceneries.component';
 import {DeviceConfiguration} from '../../../models/DeviceConfiguration';
+import FloatingStatusChange from '../../../models/FloatingStatusChange';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class LightBulbButtonComponent implements OnInit, OnDestroy {
   @Input() scenery: boolean;
   @Output() hsvChange: EventEmitter<Array<number>> = new EventEmitter();
   @Output() statusChange: EventEmitter<string> = new EventEmitter();
+  @Output() floatingChange: EventEmitter<FloatingStatusChange> = new EventEmitter();
 
   constructor(
     private router: Router,
@@ -74,9 +76,7 @@ export class LightBulbButtonComponent implements OnInit, OnDestroy {
           this.toggleButton();
         }
         this.updateLocalStatus(message);
-        // this.configuration.deviceStatus = message.status;
-        // this.configuration.floatingStatus = message.floatingStatus;
-        // this.configuration.floatingSpeed = message.floatingSpeed;
+        this.emitData(this.floatingChange, new FloatingStatusChange(message));
       } else if (message.task === 'color change') {
         this.updateLocalHSV(message);
         this.emitData(this.hsvChange, this.hsv);
@@ -86,9 +86,7 @@ export class LightBulbButtonComponent implements OnInit, OnDestroy {
           this.toggleButton();
         }
         this.updateLocalStatus(message);
-        // this.configuration.deviceStatus = message.status;
-        // this.configuration.floatingStatus = message.floatingStatus;
-        // this.configuration.floatingSpeed = message.floatingSpeed;
+        this.emitData(this.floatingChange, new FloatingStatusChange(message));
       }
     }
 

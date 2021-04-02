@@ -6,6 +6,7 @@ import {DeviceSelectorDialogComponent} from '../../dialogs/device-selector-dialo
 import {MatStepper} from '@angular/material/stepper';
 import {SceneryService} from '../../../service/scenery.service';
 import {RoomConfiguration} from '../../../models/RoomConfiguration';
+import FloatingStatusChange from '../../../models/FloatingStatusChange';
 const _ = require('lodash');
 
 
@@ -77,6 +78,11 @@ export class SceneDialogComponent implements OnInit {
     _.set(_.find(this.selectedDevices, {serial: deviceSerial}), 'hue', hsv[0]);
     _.set(_.find(this.selectedDevices, {serial: deviceSerial}), 'saturation', hsv[1]);
     _.set(_.find(this.selectedDevices, {serial: deviceSerial}), 'brightness', hsv[2]);
+  }
+
+  floatingChanged(floatingStatusChanged: FloatingStatusChange, deviceSerial: number){
+    _.set(_.find(this.selectedDevices, {serial: deviceSerial}), 'floatingStatus', floatingStatusChanged.floatingStatus);
+    _.set(_.find(this.selectedDevices, {serial: deviceSerial}), 'floatingSpeed', floatingStatusChanged.floatingSpeed);
   }
 
   selectDevices(){

@@ -35,7 +35,8 @@
                 [configuration]="device"
                 [scenery]="true"
                 (statusChange)="statusChanged($event, device.serial)"
-                (hsvChange)="hsvChanged($event, device.serial)"></app-light-bulb-button>
+                (hsvChange)="hsvChanged($event, device.serial)"
+                (floatingChange)="floatingChanged($event, device.serial)"></app-light-bulb-button>
 
             </ng-container>
           <button mat-stroked-button (click)="selectDevices()">Add devices</button>

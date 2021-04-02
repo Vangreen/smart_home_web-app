@@ -110,7 +110,6 @@ export class ColorPickerComponent implements OnInit, OnDestroy {
       floatingStatus: floating,
       floatingSpeed: this.deviceConfiguration.floatingSpeed
     };
-
     this.webSocketService.changeDeviceColor(this.deviceConfiguration.serial, message);
   }
 
@@ -184,7 +183,6 @@ export class ColorPickerComponent implements OnInit, OnDestroy {
       floatingSpeed: this.deviceConfiguration.floatingSpeed
     };
     this.deviceService.changeDeviceStatus(this.deviceConfiguration.serial, message);
-
   }
 
 }
