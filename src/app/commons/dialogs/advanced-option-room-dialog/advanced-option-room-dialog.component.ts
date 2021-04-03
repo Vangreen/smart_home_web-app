@@ -1,9 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {RoomConfiguration} from "../../../models/RoomConfiguration";
-import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
-import {RoomService} from "../../../service/room.service";
+import {RoomConfiguration} from '../../../models/RoomConfiguration';
+import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
+import {RoomService} from '../../../service/room.service';
 
-const _ = require('lodash');
+import * as _ from 'lodash';
 
 export interface DialogData {
   roomsList: Array<RoomConfiguration>;

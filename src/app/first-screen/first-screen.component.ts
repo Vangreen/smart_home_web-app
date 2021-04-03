@@ -12,7 +12,7 @@ import {RoomConfiguration} from '../models/RoomConfiguration';
 import {SceneryService} from '../service/scenery.service';
 import {SceneryConfiguration} from '../models/SceneryConfiguration';
 import {Subject} from 'rxjs';
-const _ = require('lodash');
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-first-screen',

@@ -6,7 +6,6 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
-import {IgxBottomNavModule} from 'igniteui-angular';
 import {FirstScreenComponent} from './first-screen/first-screen.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatButtonModule} from '@angular/material/button';
@@ -37,16 +36,16 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {AddRoomDialogComponent} from './commons/dialogs/add-room-dialog/add-room-dialog.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { AdvancedOptionRoomDialogComponent } from './commons/dialogs/advanced-option-room-dialog/advanced-option-room-dialog.component';
+import {AdvancedOptionRoomDialogComponent} from './commons/dialogs/advanced-option-room-dialog/advanced-option-room-dialog.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatOptionModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
-import { LightBulbSelectButtonComponent } from './commons/light-bulb/light-bulb-select-button/light-bulb-select-button.component';
+import {LightBulbSelectButtonComponent} from './commons/light-bulb/light-bulb-select-button/light-bulb-select-button.component';
 import {CommonModule} from '@angular/common';
-import { DeviceSelectorDialogComponent } from './commons/dialogs/device-selector-dialog/device-selector-dialog.component';
-import { ColorPickerSceneriesComponent } from './commons/color-picker-sceneries/color-picker-sceneries.component';
-import { LightBulbButtonMockComponent } from './commons/light-bulb/light-bulb-button-mock/light-bulb-button-mock.component';
-import { SceneryButtonMockComponent } from './commons/scene/scenery-button-mock/scenery-button-mock.component';
+import {DeviceSelectorDialogComponent} from './commons/dialogs/device-selector-dialog/device-selector-dialog.component';
+import {ColorPickerSceneriesComponent} from './commons/color-picker-sceneries/color-picker-sceneries.component';
+import {LightBulbButtonMockComponent} from './commons/light-bulb/light-bulb-button-mock/light-bulb-button-mock.component';
+import {SceneryButtonMockComponent} from './commons/scene/scenery-button-mock/scenery-button-mock.component';
 
 
 @NgModule({
@@ -76,7 +75,6 @@ import { SceneryButtonMockComponent } from './commons/scene/scenery-button-mock/
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    IgxBottomNavModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     MatSlideToggleModule,
     MatButtonModule,
