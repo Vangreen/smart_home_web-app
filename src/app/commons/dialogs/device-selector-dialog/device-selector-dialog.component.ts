@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {DeviceConfiguration} from '../../../models/DeviceConfiguration';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {SceneDialogComponent} from '../../scene/scene-dialog/scene-dialog.component';
-const _ = require('lodash');
+import * as _ from 'lodash';
 
 export interface DialogData{
   devicesList: Array<DeviceConfiguration>;

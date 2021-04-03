@@ -6,7 +6,7 @@ import {DeviceSelectorDialogComponent} from '../../dialogs/device-selector-dialo
 import {MatStepper} from '@angular/material/stepper';
 import {SceneryService} from '../../../service/scenery.service';
 import {RoomConfiguration} from '../../../models/RoomConfiguration';
-const _ = require('lodash');
+import * as _ from 'lodash';
 
 
 
