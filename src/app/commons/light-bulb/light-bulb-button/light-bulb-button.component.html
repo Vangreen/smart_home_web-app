@@ -2,7 +2,7 @@
   mat-button
   (click)="enableDisableRule()"
   long-press (onLongPress)="onLongPress()"
-  [ngClass]="{'turnedOn' : toggle, 'turnedOff': !toggle, 'disabledClick' : disableClick}"
+  [ngClass]="{'turnedOn' : configuration.deviceStatus === 'On', 'turnedOff': configuration.deviceStatus === 'Off', 'turnedFloating' : configuration.floatingStatus === 'On' && configuration.deviceStatus !== 'Off'}"
   class="button">
   <img src="{{img}}" class="light">
   <p class="device">{{configuration.deviceName}}</p>

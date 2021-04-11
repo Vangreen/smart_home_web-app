@@ -16,8 +16,32 @@
     </ng-template>
     <div class="parent">
       <div class="center">
-        <div id="picker"  (click)="changeColorCircle()"
-             ></div>
+        <div id="picker"  (touchend)="changeColorCircle(colorPicker)" (click)="changeColorCircle(colorPicker)"
+             (dragend)="changeColorCircle(colorPicker)"></div>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">highlight</mat-icon>
+    </ng-template>
+    <div class="parent">
+      <div class="center">
+        <mat-form-field appearance="fill">
+          <mat-label>Prędkość zmiany koloru</mat-label>
+          <mat-select [(value)]="selected" (selectionChange)="changeSpeed()">
+            <mat-option *ngFor="let speedOption of speedOptions" [value]="speedOption">
+              {{speedOption.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-checkbox class="example-margin"
+                      [checked]="checked"
+                      (change)="floatingTrigger($event.checked)">Pływające światła
+        </mat-checkbox>
+        <div id="slider"  (touchend)="changeColorCircle(colorSlider)" (click)="changeColorCircle(colorSlider)"
+             (dragend)="changeColorCircle(colorSlider)"></div>
       </div>
     </div>
   </mat-tab>
