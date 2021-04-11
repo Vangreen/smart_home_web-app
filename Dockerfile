@@ -1,11 +1,11 @@
-FROM node:10
+# base image
+FROM nginx
 
-WORKDIR /usr/src/app/app-ui
+# copy artifact build from the 'build environment'
+COPY /dist /usr/share/nginx/html
 
-COPY package*.json ./
+# expose port 80
+EXPOSE 80
 
-RUN npm install -g @angular/cli @angular-devkit/build-angular && npm install
-
-EXPOSE 4200
-
-CMD ["npm", "start"]
+# run nginx
+CMD ["nginx", "-g", "daemon off;"]

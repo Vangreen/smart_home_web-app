@@ -6,8 +6,9 @@ import {DeviceSelectorDialogComponent} from '../../dialogs/device-selector-dialo
 import {MatStepper} from '@angular/material/stepper';
 import {SceneryService} from '../../../service/scenery.service';
 import {RoomConfiguration} from '../../../models/RoomConfiguration';
+import * as _ from 'lodash';
 import FloatingStatusChange from '../../../models/FloatingStatusChange';
-const _ = require('lodash');
+
 
 
 
