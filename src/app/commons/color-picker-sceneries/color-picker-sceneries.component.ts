@@ -64,7 +64,7 @@ export class ColorPickerSceneriesComponent implements OnInit, OnDestroy {
     const sat = 100;
     const message = {
       task: 'color change',
-      status: this.deviceConfiguration.deviceStatus,
+      deviceStatus: this.deviceConfiguration.deviceStatus,
       hue: this.butHue,
       saturation: sat,
       brightness: this.deviceConfiguration.brightness
@@ -87,7 +87,7 @@ export class ColorPickerSceneriesComponent implements OnInit, OnDestroy {
     }
     const message = {
       task: 'color change',
-      status: this.deviceConfiguration.deviceStatus,
+      deviceStatus: this.deviceConfiguration.deviceStatus,
       hue: element.color.hsv.h,
       saturation: element.color.hsv.s,
       brightness: element.color.hsv.v,
@@ -135,7 +135,7 @@ export class ColorPickerSceneriesComponent implements OnInit, OnDestroy {
   changeSpeed(){
     this.deviceConfiguration.floatingSpeed = this.selected.value;
     const message = {
-      status: this.deviceConfiguration.deviceStatus,
+      deviceStatus: this.deviceConfiguration.deviceStatus,
       floatingStatus: this.deviceConfiguration.floatingStatus,
       floatingSpeed: this.deviceConfiguration.floatingSpeed
     };
@@ -147,7 +147,7 @@ export class ColorPickerSceneriesComponent implements OnInit, OnDestroy {
     this.checked = checked;
     this.deviceConfiguration.floatingStatus = this.checked ? 'On' : 'Off';
     const message = {
-      status: this.deviceConfiguration.deviceStatus,
+      deviceStatus: this.deviceConfiguration.deviceStatus,
       floatingStatus: this.deviceConfiguration.floatingStatus,
       floatingSpeed: this.deviceConfiguration.floatingSpeed
     };

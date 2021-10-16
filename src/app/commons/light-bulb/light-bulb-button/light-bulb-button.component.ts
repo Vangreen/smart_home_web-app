@@ -126,7 +126,7 @@ export class LightBulbButtonComponent implements OnInit, OnDestroy {
     this.toggleButton();
     if (this.configuration.serial !== undefined) {
       const message = {
-        status: this.configuration.deviceStatus,
+        deviceStatus: this.configuration.deviceStatus,
         floatingStatus: this.configuration.floatingStatus,
         floatingSpeed: this.configuration.floatingSpeed
       };
