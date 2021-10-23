@@ -10,9 +10,9 @@ export class ApiService {
 
   constructor(private httpClient: HttpClient) {
   }
-  public getDevices(roomID: number){
+  public getDeviceByRoomID(roomID: number){
     const params = new HttpParams().set('roomID', String(roomID));
-    return this.httpClient.get(environment.serverURL + `/getDevices`, {params});
+    return this.httpClient.get(environment.serverURL + `/getDeviceByRoomID`, {params});
   }
 
   public addDevice(setSerial: number, deviceType: string, setName: string, roomID: number){
