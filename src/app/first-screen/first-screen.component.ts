@@ -87,7 +87,7 @@ export class FirstScreenComponent implements OnInit {
 
   public apiHandler() {
     if (this.room != null){
-      this.apiService.getDevices(this.room.id).subscribe((data: Array<DeviceConfiguration>) => {
+      this.apiService.getDeviceByRoomID(this.room.id).subscribe((data: Array<DeviceConfiguration>) => {
         this.Buttons = data;
       });
     }
