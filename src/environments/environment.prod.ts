@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  serverURL: 'http://smart-home-server',
-  websocketURL: 'ws://smart-home-server/mywebsocket/websocket'
+  serverURL: 'http://localhost:9999',
+  websocketURL: 'ws://localhost:9999/mywebsocket/websocket'
 };
