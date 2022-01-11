@@ -13,7 +13,7 @@ export class RoomService {
   constructor(private httpClient: HttpClient,
               private websocket: WebsocketService) { }
 
-  public addRoom(roomNamel: string, mainl: string){
+  public addRoom(roomNamel: string, mainl: boolean){
     const message = {
       roomName: roomNamel,
       main: mainl
