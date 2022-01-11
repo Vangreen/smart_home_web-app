@@ -4,9 +4,8 @@
 
 export const environment = {
   production: false,
-  // serverURL: 'http://192.168.0.16:9999',
-  serverURL: 'http://127.0.0.1:9999',
-  websocketURL: 'ws://127.0.0.1:9999/mywebsocket/websocket'
+  serverURL: 'http://localhost:9999',
+  websocketURL: 'ws://localhost:9999/mywebsocket/websocket'
 };
 
 /*

@@ -1,5 +1,9 @@
 # SmartHomeApp
 
+![alt text](https://i.imgur.com/9iEA9Ps.png)
+![alt text](https://i.imgur.com/3TT8Znh.png)
+![alt text](https://i.imgur.com/sq2ynhn.png)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.1.
 
 ## Development server

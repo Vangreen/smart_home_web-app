@@ -65,7 +65,7 @@ export class FirstScreenComponent implements OnInit {
   roomsListChange(roomsList: Array<RoomConfiguration>){
     this.roomsList = roomsList;
     if (this.room == null){
-      const main = roomsList.find(ele => ele.main === 'yes');
+      const main = roomsList.find(ele => ele.main === true);
       if (main !== undefined){
         this.room = main;
       }else if (Object.keys(roomsList).length !== 0){
@@ -87,7 +87,7 @@ export class FirstScreenComponent implements OnInit {
 
   public apiHandler() {
     if (this.room != null){
-      this.apiService.getDevices(this.room.id).subscribe((data: Array<DeviceConfiguration>) => {
+      this.apiService.getDeviceByRoomID(this.room.id).subscribe((data: Array<DeviceConfiguration>) => {
         this.Buttons = data;
       });
     }

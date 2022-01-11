@@ -13,6 +13,10 @@
   background-color: lightgrey;
 }
 
+.turnedFloating {
+  background: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);
+}
+
 .disabledClick{
   pointer-events: none;
   cursor: default;

@@ -20,8 +20,17 @@ export class ColorPickerSceneriesComponent implements OnInit, OnDestroy {
   deviceConfiguration: DeviceConfiguration;
   butHue: number;
   colors: string[];
+  speedOptions = [
+    {value: 200, viewValue: 'slow'},
+    {value: 100, viewValue: 'normal'},
+    {value: 40, viewValue: 'fast'}
+  ];
+  selected;
+  executedColorPicker = false;
+  executedColorSlider = false;
   colorPicker: iro.ColorPicker;
-  executed = false;
+  colorSlider: iro.ColorPicker;
+  checked: boolean = false;
   private unsubscribeSubject: Subject<void> = new Subject<void>();
 
   constructor(
@@ -55,7 +64,7 @@ export class ColorPickerSceneriesComponent implements OnInit, OnDestroy {
     const sat = 100;
     const message = {
       task: 'color change',
-      status: this.deviceConfiguration.deviceStatus,
+      deviceStatus: this.deviceConfiguration.deviceStatus,
       hue: this.butHue,
       saturation: sat,
       brightness: this.deviceConfiguration.brightness
@@ -64,24 +73,34 @@ export class ColorPickerSceneriesComponent implements OnInit, OnDestroy {
     this.deviceConfiguration.hue = this.butHue;
   }
 
-  changeColorCircle(): void {
-    console.log(this.colorPicker.color.hsv);
+  changeColorCircle(element: iro.ColorPicker): void {
+    console.log(element.color.hsv);
     console.log('COLOR CHANGE PICKER Circle');
-    this.butHue = this.colorPicker.color.hsv.h;
+    this.butHue = element.color.hsv.h;
+    let floating;
+    if (element === this.colorSlider && this.checked){
+      floating = 'On';
+    }else{
+      floating = 'Off';
+      this.checked = false;
+      this.deviceConfiguration.floatingStatus = 'Off';
+    }
     const message = {
       task: 'color change',
-      status: this.deviceConfiguration.deviceStatus,
-      hue: this.colorPicker.color.hsv.h,
-      saturation: this.colorPicker.color.hsv.s,
-      brightness: this.colorPicker.color.hsv.v
+      deviceStatus: this.deviceConfiguration.deviceStatus,
+      hue: element.color.hsv.h,
+      saturation: element.color.hsv.s,
+      brightness: element.color.hsv.v,
+      floatingStatus: floating,
+      floatingSpeed: this.deviceConfiguration.floatingSpeed
     };
     this.webSocketService.changeDeviceColor(this.deviceConfiguration.serial, message);
   }
 
   tabClick(tab) {
     console.log(tab.index);
-    if (tab.index === 1 && this.executed === false) {
-      this.executed = true;
+    if (tab.index === 1 && this.executedColorPicker === false) {
+      this.executedColorPicker = true;
       this.colorPicker = iro.ColorPicker('#picker', {
         width: 280,
         color: {h: this.deviceConfiguration.hue, s: this.deviceConfiguration.saturation, v: this.deviceConfiguration.brightness},
@@ -91,7 +110,48 @@ export class ColorPickerSceneriesComponent implements OnInit, OnDestroy {
       });
     }else if (tab.index === 1){
       this.colorPicker.color.hsv = {h: this.deviceConfiguration.hue, s: this.deviceConfiguration.saturation, v: this.deviceConfiguration.brightness};
+    }else if (tab.index === 2 && this.executedColorSlider === false) {
+      this.executedColorSlider = true;
+      this.colorSlider = iro.ColorPicker('#slider', {
+        color: {h: this.deviceConfiguration.hue, s: this.deviceConfiguration.saturation, v: this.deviceConfiguration.brightness},
+        layout: [
+          {
+            component: iro.ui.Slider,
+            options: {
+              sliderType: 'value'
+            }
+          }
+        ]
+      });
+    }else if (tab.index === 2){
+      this.colorSlider.color.hsv = {
+        h: this.deviceConfiguration.hue,
+        s: this.deviceConfiguration.saturation,
+        v: this.deviceConfiguration.brightness
+      };
     }
+  }
+
+  changeSpeed(){
+    this.deviceConfiguration.floatingSpeed = this.selected.value;
+    const message = {
+      deviceStatus: this.deviceConfiguration.deviceStatus,
+      floatingStatus: this.deviceConfiguration.floatingStatus,
+      floatingSpeed: this.deviceConfiguration.floatingSpeed
+    };
+    this.webSocketService.changeDeviceStatus(this.deviceConfiguration.serial, message);
+  }
+
+  floatingTrigger(checked: boolean) {
+    console.log(checked);
+    this.checked = checked;
+    this.deviceConfiguration.floatingStatus = this.checked ? 'On' : 'Off';
+    const message = {
+      deviceStatus: this.deviceConfiguration.deviceStatus,
+      floatingStatus: this.deviceConfiguration.floatingStatus,
+      floatingSpeed: this.deviceConfiguration.floatingSpeed
+    };
+    this.webSocketService.changeDeviceStatus(this.deviceConfiguration.serial, message);
   }
 
 }
