@@ -12,7 +12,7 @@ export class AddRoomDialogComponent implements OnInit {
 
   checked = false;
   roomName: string;
-  main: string;
+  main: boolean;
   emailFormControl = new FormControl('', [
     Validators.required,
   ]);
@@ -26,7 +26,7 @@ export class AddRoomDialogComponent implements OnInit {
 
   onAddButtonClick() {
     console.log('clicked');
-    this.checked === false ? this.main = 'no' : this.main = 'yes';
+    this.checked === false ? this.main = false : this.main = true;
     this.roomService.addRoom(this.roomName, this.main);
   }
 
