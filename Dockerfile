@@ -14,5 +14,6 @@ RUN ng build --prod --output-path=dist
 ################
 FROM nginx
 COPY /dist /usr/share/nginx/html
+COPY /src/assets /usr/share/nginx/html/assets
 EXPOSE 80
 CMD ["/bin/sh",  "-c",  "envsubst < /usr/share/nginx/html/assets/env.template.js > /usr/share/nginx/html/assets/env.js && exec nginx -g 'daemon off;'"]
